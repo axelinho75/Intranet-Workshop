@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procédure Incident de Sécurité - PHANTOM Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-amber: #D4A574;
+            --secondary-amber: #B3995B;
+            --dark-bg: #0D0D0D;
+            --card-bg: #1A1A1A;
+            --text-light: #f5f5f5;
+            --text-dim: #cccccc;
+            --warning-red: #CC4125;
+            --success-green: #4A7C59;
+        }
+
+        @media print {
+            body { background: white !important; color: #333 !important; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .export-controls { display: none !important; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--warning-red), #CC4125);
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .procedure-meta {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        .content { padding: 30px; }
+
+        .export-controls {
+            background: rgba(204, 65, 37, 0.1);
+            border: 1px solid var(--warning-red);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--warning-red), #AA3520);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(204, 65, 37, 0.3);
+        }
+
+        .nav-breadcrumb {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--secondary-amber);
+            text-decoration: none;
+        }
+
+        .nav-breadcrumb a:hover { color: var(--primary-amber); }
+
+        .section { margin-bottom: 30px; }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-amber);
+        }
+
+        .section h3 {
+            color: var(--secondary-amber);
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .section p { margin-bottom: 15px; text-align: justify; }
+
+        .critical-box {
+            background: rgba(204, 65, 37, 0.1);
+            border-left: 4px solid var(--warning-red);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--primary-amber);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: rgba(74, 124, 89, 0.1);
+            border-left: 4px solid var(--success-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: var(--primary-amber);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .contact-list {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .contact-item:last-child { border-bottom: none; }
+
+        .contact-role { color: var(--primary-amber); font-weight: 600; }
+
+        .timeline {
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .timeline h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .timeline-time {
+            color: var(--warning-red);
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+            min-width: 100px;
+        }
+
+        .footer {
+            background: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 PROCÉDURE INCIDENT DE SÉCURITÉ</h1>
+            <div class="procedure-meta">
+                Classification: CRITIQUE • Version 3.2 • Mise à jour: 15/03/2025
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="nav-breadcrumb no-print">
+                <a href="../../index.html">Archives</a> > 
+                <a href="../index.html">Procédures</a> > 
+                Incident de Sécurité
+            </div>
+
+            <div class="export-controls">
+                <button class="export-btn" onclick="exportPDF()">📄 EXPORTER EN PDF</button>
+            </div>
+
+            <div class="critical-box">
+                <strong>🚨 ALERTE CRITIQUE :</strong> Cette procédure doit être appliquée immédiatement en cas de suspicion ou détection d'incident de sécurité informatique.
+            </div>
+
+            <div class="section">
+                <h2>🎯 OBJECTIF</h2>
+                <p>Cette procédure définit les actions à entreprendre pour identifier, contenir, analyser et résoudre tout incident de sécurité informatique susceptible de compromettre l'intégrité, la confidentialité ou la disponibilité des systèmes d'information PHANTOM.</p>
+            </div>
+
+            <div class="section">
+                <h2>⚡ PROCÉDURE D'URGENCE (0-15 minutes)</h2>
+                
+                <div class="timeline">
+                    <h4>⏱️ Chronologie Critique</h4>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+0 min</span>
+                        <span>Détection de l'incident</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+2 min</span>
+                        <span>Isolation immédiate</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+5 min</span>
+                        <span>Alerte équipe sécurité</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+15 min</span>
+                        <span>Rapport préliminaire</span>
+                    </div>
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>ISOLATION IMMÉDIATE</strong><br>
+                        Déconnecter physiquement le système compromis du réseau. Ne PAS éteindre le système (préservation des preuves en mémoire vive).
+                    </li>
+                    <li>
+                        <strong>DOCUMENTATION INITIALE</strong><br>
+                        Noter l'heure exacte, les symptômes observés, les actions déjà entreprises. Prendre des captures d'écran si possible.
+                    </li>
+                    <li>
+                        <strong>ALERTE IMMÉDIATE</strong><br>
+                        Contacter le responsable sécurité IT et le directeur technique selon la liste de contacts d'urgence.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>📞 CONTACTS D'URGENCE</h2>
+                
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <span class="contact-role">Responsable Sécurité IT</span>
+                        <span>+33 6 XX XX XX XX</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-role">Directeur Technique</span>
+                        <span>+33 6 YY YY YY YY</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-role">PHANTOM Security Center</span>
+                        <span>security@phantom-corp.internal</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-role">Ligne d'urgence 24/7</span>
+                        <span>+33 800 XXX XXX</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔍 ANALYSE ET ÉVALUATION</h2>
+                
+                <h3>Classification des Incidents</h3>
+                
+                <div class="critical-box">
+                    <strong>NIVEAU 1 - CRITIQUE :</strong>
+                    <br>• Compromission système de production
+                    <br>• Fuite de données sensibles
+                    <br>• Ransomware détecté
+                    <br>• Accès non autorisé aux serveurs critiques
+                </div>
+
+                <div class="info-box">
+                    <strong>NIVEAU 2 - MAJEUR :</strong>
+                    <br>• Tentative d'intrusion détectée
+                    <br>• Malware sur poste utilisateur
+                    <br>• Phishing ciblé
+                    <br>• Anomalie système suspecte
+                </div>
+
+                <div class="success-box">
+                    <strong>NIVEAU 3 - MINEUR :</strong>
+                    <br>• Tentative de connexion suspecte
+                    <br>• Spam/phishing générique
+                    <br>• Violation de politique mineure
+                    <br>• Alerte sécurité préventive
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🛠️ ACTIONS DE CONTAINMENT</h2>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>ISOLATION RÉSEAU</strong><br>
+                        Isoler les systèmes affectés sans les éteindre. Documenter toutes les connexions réseau actives.
+                    </li>
+                    <li>
+                        <strong>PRÉSERVATION DES PREUVES</strong><br>
+                        Créer une image forensique des disques. Sauvegarder les logs système et réseau. Photographier l'état des écrans.
+                    </li>
+                    <li>
+                        <strong>ÉVALUATION DE L'IMPACT</strong><br>
+                        Identifier les données potentiellement compromises. Évaluer l'étendue de la propagation. Estimer les dommages.
+                    </li>
+                    <li>
+                        <strong>ACTIVATION DES SAUVEGARDES</strong><br>
+                        Basculer sur les systèmes de backup si nécessaire. Vérifier l'intégrité des sauvegardes. Activer le plan de continuité.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>📋 ÉRADICATION ET RÉCUPÉRATION</h2>
+                
+                <h3>Étapes d'Éradication</h3>
+                <ul>
+                    <li>Identifier et supprimer la cause racine</li>
+                    <li>Patcher les vulnérabilités exploitées</li>
+                    <li>Renforcer les contrôles de sécurité</li>
+                    <li>Mettre à jour les signatures antivirus</li>
+                    <li>Changer tous les mots de passe compromis</li>
+                </ul>
+
+                <h3>Plan de Récupération</h3>
+                <ul>
+                    <li>Restaurer les systèmes à partir de sauvegardes saines</li>
+                    <li>Valider l'intégrité des données restaurées</li>
+                    <li>Effectuer des tests de sécurité complets</li>
+                    <li>Surveiller attentivement les systèmes restaurés</li>
+                    <li>Obtenir validation avant remise en production</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📊 RAPPORT POST-INCIDENT</h2>
+                
+                <div class="info-box">
+                    <strong>💡 OBLIGATOIRE :</strong> Un rapport détaillé doit être rédigé dans les 48h suivant la résolution de l'incident.
+                </div>
+
+                <h3>Contenu du Rapport</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>RÉSUMÉ EXÉCUTIF</strong><br>
+                        Description concise de l'incident, impact business, actions prises, leçons apprises.
+                    </li>
+                    <li>
+                        <strong>CHRONOLOGIE DÉTAILLÉE</strong><br>
+                        Timeline précise des événements, actions entreprises, temps de réponse à chaque étape.
+                    </li>
+                    <li>
+                        <strong>ANALYSE TECHNIQUE</strong><br>
+                        Méthode d'attaque utilisée, vulnérabilités exploitées, vecteurs d'infection, preuves collectées.
+                    </li>
+                    <li>
+                        <strong>RECOMMANDATIONS</strong><br>
+                        Améliorations de sécurité, formation nécessaire, mise à jour des procédures, investissements requis.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>✅ CHECKLIST DE VALIDATION</h2>
+                
+                <div class="success-box">
+                    <strong>☐ Incident détecté et documenté</strong><br>
+                    <strong>☐ Système(s) isolé(s) du réseau</strong><br>
+                    <strong>☐ Équipe sécurité alertée</strong><br>
+                    <strong>☐ Preuves préservées</strong><br>
+                    <strong>☐ Impact évalué</strong><br>
+                    <strong>☐ Cause racine identifiée</strong><br>
+                    <strong>☐ Vulnérabilités corrigées</strong><br>
+                    <strong>☐ Systèmes restaurés et validés</strong><br>
+                    <strong>☐ Surveillance renforcée activée</strong><br>
+                    <strong>☐ Rapport post-incident rédigé</strong><br>
+                    <strong>☐ Leçons apprises partagées</strong><br>
+                    <strong>☐ Procédures mises à jour</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">PHANTOM CORPORATION</div>
+            <p>Procédure critique • Classification Niveau 3 • Usage interne uniquement</p>
+            <p>En cas de doute, contacter immédiatement le service sécurité</p>
+        </div>
+    </div>
+
+    <script>
+        function exportPDF() {
+            const exportControls = document.querySelector('.export-controls');
+            exportControls.style.display = 'none';
+            
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    exportControls.style.display = 'block';
+                }, 1000);
+            }, 500);
+            
+            console.log('📄 Export PDF - Procédure Incident de Sécurité');
+        }
+
+        console.log('🔐 Procédure Incident de Sécurité - Version 3.2 chargée');
+    </script>
+</body>
+</html>

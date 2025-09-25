@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procédure Panne Électrique - PHANTOM Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-amber: #D4A574;
+            --secondary-amber: #B3995B;
+            --dark-bg: #0D0D0D;
+            --card-bg: #1A1A1A;
+            --text-light: #f5f5f5;
+            --text-dim: #cccccc;
+            --warning-red: #CC4125;
+            --success-green: #4A7C59;
+        }
+
+        @media print {
+            body { background: white !important; color: #333 !important; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .export-controls { display: none !important; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-amber), var(--secondary-amber));
+            color: #000;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .procedure-meta {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        .content { padding: 30px; }
+
+        .export-controls {
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid var(--primary-amber);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--secondary-amber), var(--primary-amber));
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .nav-breadcrumb {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--secondary-amber);
+            text-decoration: none;
+        }
+
+        .nav-breadcrumb a:hover { color: var(--primary-amber); }
+
+        .section { margin-bottom: 30px; }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-amber);
+        }
+
+        .section h3 {
+            color: var(--secondary-amber);
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .section p { margin-bottom: 15px; text-align: justify; }
+
+        .warning-box {
+            background: rgba(204, 65, 37, 0.1);
+            border-left: 4px solid var(--warning-red);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--primary-amber);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: rgba(74, 124, 89, 0.1);
+            border-left: 4px solid var(--success-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: var(--primary-amber);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .ups-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .ups-table th,
+        .ups-table td {
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .ups-table th {
+            background: rgba(212, 165, 116, 0.2);
+            color: var(--primary-amber);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+
+        .timeline {
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .timeline h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-left: 2px solid var(--primary-amber);
+            margin-left: 10px;
+            padding-left: 15px;
+        }
+
+        .timeline-time {
+            color: var(--primary-amber);
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+            min-width: 80px;
+            margin-right: 15px;
+        }
+
+        .contact-emergency {
+            background: var(--card-bg);
+            border: 2px solid var(--warning-red);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .contact-emergency h4 {
+            color: var(--warning-red);
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+            text-align: center;
+        }
+
+        .contact-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .contact-item:last-child { border-bottom: none; }
+
+        .checklist {
+            background: rgba(212, 165, 116, 0.05);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: var(--primary-amber);
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            background: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ PROCÉDURE PANNE ÉLECTRIQUE</h1>
+            <div class="procedure-meta">
+                Classification: IMPORTANT • Version 1.8 • Mise à jour: 05/03/2025
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="nav-breadcrumb no-print">
+                <a href="../../index.html">Archives</a> > 
+                <a href="../index.html">Procédures</a> > 
+                Panne Électrique
+            </div>
+
+            <div class="export-controls">
+                <button class="export-btn" onclick="exportPDF()">📄 EXPORTER EN PDF</button>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ SÉCURITÉ :</strong> Cette procédure couvre les actions à entreprendre lors d'une coupure d'alimentation électrique pour protéger les équipements et assurer la continuité de service.
+            </div>
+
+            <div class="section">
+                <h2>🎯 OBJECTIF</h2>
+                <p>Définir les actions immédiates et de suivi à entreprendre lors d'une panne d'alimentation électrique pour minimiser l'impact sur les systèmes PHANTOM, protéger les données et assurer une reprise rapide de l'activité.</p>
+            </div>
+
+            <div class="section">
+                <h2>🔋 SYSTÈMES UPS ET AUTONOMIE</h2>
+                
+                <table class="ups-table">
+                    <thead>
+                        <tr>
+                            <th>Équipement</th>
+                            <th>UPS Associé</th>
+                            <th>Autonomie</th>
+                            <th>Priorité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Serveurs PHANTOM Core</td>
+                            <td>UPS-001 (3kVA)</td>
+                            <td>45 minutes</td>
+                            <td>CRITIQUE</td>
+                        </tr>
+                        <tr>
+                            <td>Switch réseau principal</td>
+                            <td>UPS-002 (1.5kVA)</td>
+                            <td>90 minutes</td>
+                            <td>CRITIQUE</td>
+                        </tr>
+                        <tr>
+                            <td>Serveur de sauvegarde</td>
+                            <td>UPS-003 (2kVA)</td>
+                            <td>60 minutes</td>
+                            <td>HAUTE</td>
+                        </tr>
+                        <tr>
+                            <td>Poste administrateur</td>
+                            <td>UPS-004 (800VA)</td>
+                            <td>30 minutes</td>
+                            <td>MOYENNE</td>
+                        </tr>
+                        <tr>
+                            <td>Système climatisation</td>
+                            <td>Groupe électrogène</td>
+                            <td>12 heures</td>
+                            <td>HAUTE</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>⏱️ CHRONOLOGIE D'INTERVENTION</h2>
+                
+                <div class="timeline">
+                    <h4>📋 Timeline des Actions</h4>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+0</span>
+                        <span>Détection panne - Basculement UPS automatique</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+2 min</span>
+                        <span>Évaluation durée estimée de la coupure</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+5 min</span>
+                        <span>Notification équipe technique</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+10 min</span>
+                        <span>Démarrage groupe électrogène si nécessaire</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+20 min</span>
+                        <span>Arrêt programmé systèmes non critiques</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-time">T+40 min</span>
+                        <span>Arrêt sécurisé systèmes critiques si pas de secours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🚨 ACTIONS IMMÉDIATES (0-5 minutes)</h2>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>VÉRIFICATION ÉTAT UPS</strong><br>
+                        Contrôler le statut de tous les onduleurs via l'interface de monitoring. Noter le niveau de charge et l'autonomie restante.
+                    </li>
+                    <li>
+                        <strong>ÉVALUATION DE LA PANNE</strong><br>
+                        Déterminer l'étendue de la coupure : locale, quartier, générale. Consulter les sites des fournisseurs d'énergie pour estimer la durée.
+                    </li>
+                    <li>
+                        <strong>NOTIFICATION ÉQUIPE</strong><br>
+                        Alerter immédiatement l'équipe technique via PHANTOM et SMS. Déclencher la procédure de crise si nécessaire.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>⚙️ GESTION DES SYSTÈMES CRITIQUES</h2>
+                
+                <h3>Serveurs PHANTOM (Priorité 1)</h3>
+                <div class="success-box">
+                    <strong>✅ AUTONOMIE 45 MINUTES :</strong> Temps suffisant pour l'arrêt sécurisé complet si nécessaire.
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>SURVEILLANCE CONTINUE</strong><br>
+                        Monitorer en permanence l'état de l'UPS-001. Surveiller la température des serveurs et l'état du système de refroidissement.
+                    </li>
+                    <li>
+                        <strong>SAUVEGARDE IMMÉDIATE</strong><br>
+                        Si la panne semble devoir durer plus de 30 minutes, déclencher la sauvegarde d'urgence des données critiques.
+                    </li>
+                    <li>
+                        <strong>ARRÊT PROGRAMMÉ</strong><br>
+                        À T+35 minutes sans retour d'alimentation, initier l'arrêt sécurisé des services PHANTOM dans l'ordre défini.
+                    </li>
+                </ol>
+
+                <h3>Groupe Électrogène</h3>
+                <div class="info-box">
+                    <strong>💡 DÉMARRAGE :</strong> Le groupe électrogène doit être démarré manuellement dans les 10 minutes suivant la coupure pour prendre le relais des UPS.
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>VÉRIFICATION PRÉ-DÉMARRAGE</strong><br>
+                        Contrôler le niveau de carburant (minimum 80%), l'état de la batterie de démarrage, l'absence d'obstacles dans la zone d'évacuation des gaz.
+                    </li>
+                    <li>
+                        <strong>DÉMARRAGE MANUEL</strong><br>
+                        Activer l'interrupteur principal, démarrer le moteur via le bouton de démarrage, attendre la stabilisation (3-5 minutes) avant basculement.
+                    </li>
+                    <li>
+                        <strong>TRANSFERT DE CHARGE</strong><br>
+                        Effectuer le basculement manuel vers le groupe électrogène via le commutateur de transfert. Vérifier la stabilité de la tension et fréquence.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section page-break">
+                <h2>🔄 PROCÉDURES D'ARRÊT SÉCURISÉ</h2>
+                
+                <h3>Ordre d'arrêt des systèmes</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>SERVICES UTILISATEUR</strong><br>
+                        Arrêt des connexions utilisateur actives, sauvegarde des sessions en cours, notification aux utilisateurs connectés (délai 5 minutes).
+                    </li>
+                    <li>
+                        <strong>APPLICATIONS MÉTIER</strong><br>
+                        Fermeture des applications PHANTOM, synchronisation finale des bases de données, arrêt des services de messagerie.
+                    </li>
+                    <li>
+                        <strong>BASES DE DONNÉES</strong><br>
+                        Commit des transactions en cours, sauvegarde d'urgence, arrêt propre des services de base de données.
+                    </li>
+                    <li>
+                        <strong>SYSTÈMES D'EXPLOITATION</strong><br>
+                        Arrêt des serveurs dans l'ordre inverse de criticité, vérification de l'arrêt complet avant coupure UPS.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>🔌 PROCÉDURES DE REDÉMARRAGE</h2>
+                
+                <h3>Après retour de l'alimentation électrique</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>VÉRIFICATION ALIMENTATION</strong><br>
+                        Contrôler la stabilité du réseau électrique (minimum 10 minutes), vérifier la qualité de l'alimentation (tension, fréquence).
+                    </li>
+                    <li>
+                        <strong>REDÉMARRAGE PROGRESSIF</strong><br>
+                        Redémarrer les systèmes dans l'ordre inverse de l'arrêt, attendre la stabilisation complète de chaque niveau avant passage au suivant.
+                    </li>
+                    <li>
+                        <strong>TESTS FONCTIONNELS</strong><br>
+                        Vérifier l'intégrité des données, tester les connexions réseau, valider le fonctionnement des services PHANTOM.
+                    </li>
+                    <li>
+                        <strong>REMISE EN SERVICE</strong><br>
+                        Autoriser la reconnexion des utilisateurs, surveiller les performances système, documenter les incidents éventuels.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>📞 CONTACTS D'URGENCE</h2>
+                
+                <div class="contact-emergency">
+                    <h4>🚨 CONTACTS PRIORITAIRES</h4>
+                    <div class="contact-item">
+                        <span><strong>Responsable IT :</strong></span>
+                        <span>+33 1 23 45 67 89</span>
+                    </div>
+                    <div class="contact-item">
+                        <span><strong>Astreinte Technique :</strong></span>
+                        <span>+33 6 12 34 56 78</span>
+                    </div>
+                    <div class="contact-item">
+                        <span><strong>Fournisseur Électricité :</strong></span>
+                        <span>0 972 675 000 (Enedis)</span>
+                    </div>
+                    <div class="contact-item">
+                        <span><strong>Mainteneur UPS :</strong></span>
+                        <span>+33 1 45 67 89 01</span>
+                    </div>
+                    <div class="contact-item">
+                        <span><strong>Direction Générale :</strong></span>
+                        <span>+33 1 98 76 54 32</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📋 POST-INCIDENT</h2>
+                
+                <div class="checklist">
+                    <h4>✅ Checklist de Clôture</h4>
+                    <ul>
+                        <li>Documenter la durée totale de la panne</li>
+                        <li>Évaluer l'impact sur les services PHANTOM</li>
+                        <li>Vérifier l'intégrité des sauvegardes effectuées</li>
+                        <li>Contrôler l'état des équipements UPS</li>
+                        <li>Tester le groupe électrogène après utilisation</li>
+                        <li>Rédiger le rapport d'incident détaillé</li>
+                        <li>Programmer la maintenance préventive si nécessaire</li>
+                        <li>Informer les parties prenantes de la reprise normale</li>
+                        <li>Analyser les améliorations possibles de la procédure</li>
+                        <li>Planifier la formation équipe si défaillances identifiées</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 MESURES PRÉVENTIVES</h2>
+                
+                <h3>Maintenance Régulière</h3>
+                <div class="info-box">
+                    <strong>💡 FRÉQUENCE :</strong> Contrôles mensuels des UPS, test du groupe électrogène trimestriel, révision annuelle complète.
+                </div>
+
+                <ul>
+                    <li><strong>UPS :</strong> Vérification des batteries, test de charge, calibrage mensuel</li>
+                    <li><strong>Groupe électrogène :</strong> Test de démarrage, contrôle carburant, maintenance moteur</li>
+                    <li><strong>Climatisation :</strong> Nettoyage filtres, contrôle réfrigérant, test basculement</li>
+                    <li><strong>Monitoring :</strong> Vérification alertes, test notifications, mise à jour seuils</li>
+                </ul>
+
+                <h3>Améliorations Recommandées</h3>
+                <div class="success-box">
+                    <strong>✅ ÉVOLUTION :</strong> Installation d'un système de basculement automatique UPS vers groupe électrogène pour réduire les délais d'intervention.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">PHANTOM CORPORATION</div>
+            <p>Document confidentiel • Classification IMPORTANT • Usage interne uniquement</p>
+            <p>Version 1.8 • Dernière révision : 05/03/2025</p>
+            <p>Contact technique : support@phantom-corp.internal</p>
+        </div>
+    </div>
+
+    <script>
+        // Export PDF
+        function exportPDF() {
+            const exportControls = document.querySelector('.export-controls');
+            exportControls.style.display = 'none';
+            
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    exportControls.style.display = 'block';
+                }, 1000);
+            }, 500);
+            
+            console.log('📄 Export PDF - Procédure Panne Électrique');
+        }
+
+        console.log('⚡ Procédure Panne Électrique - Version 1.8 chargée');
+    </script>
+</body>
+</html>

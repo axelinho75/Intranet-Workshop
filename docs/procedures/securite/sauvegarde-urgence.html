@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procédure Sauvegarde d'Urgence - PHANTOM Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-amber: #D4A574;
+            --secondary-amber: #B3995B;
+            --dark-bg: #0D0D0D;
+            --card-bg: #1A1A1A;
+            --text-light: #f5f5f5;
+            --text-dim: #cccccc;
+            --warning-red: #CC4125;
+            --success-green: #4A7C59;
+        }
+
+        @media print {
+            body { background: white !important; color: #333 !important; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .export-controls { display: none !important; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--warning-red), #CC4125);
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .procedure-meta {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        .content { padding: 30px; }
+
+        .export-controls {
+            background: rgba(204, 65, 37, 0.1);
+            border: 1px solid var(--warning-red);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--warning-red), #AA3520);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(204, 65, 37, 0.3);
+        }
+
+        .nav-breadcrumb {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--secondary-amber);
+            text-decoration: none;
+        }
+
+        .nav-breadcrumb a:hover { color: var(--primary-amber); }
+
+        .section { margin-bottom: 30px; }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-amber);
+        }
+
+        .section h3 {
+            color: var(--secondary-amber);
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .section p { margin-bottom: 15px; text-align: justify; }
+
+        .critical-box {
+            background: rgba(204, 65, 37, 0.1);
+            border-left: 4px solid var(--warning-red);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--primary-amber);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: rgba(74, 124, 89, 0.1);
+            border-left: 4px solid var(--success-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: var(--primary-amber);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .command-box {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            border-left: 4px solid var(--success-green);
+        }
+
+        .priority-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .priority-table th,
+        .priority-table td {
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .priority-table th {
+            background: rgba(212, 165, 116, 0.2);
+            color: var(--primary-amber);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+
+        .priority-critical { background: rgba(204, 65, 37, 0.1); }
+        .priority-high { background: rgba(212, 165, 116, 0.1); }
+        .priority-normal { background: rgba(74, 124, 89, 0.1); }
+
+        .footer {
+            background: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 PROCÉDURE SAUVEGARDE D'URGENCE</h1>
+            <div class="procedure-meta">
+                Classification: CRITIQUE • Version 2.1 • Mise à jour: 10/03/2025
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="nav-breadcrumb no-print">
+                <a href="../../index.html">Archives</a> > 
+                <a href="../index.html">Procédures</a> > 
+                Sauvegarde d'Urgence
+            </div>
+
+            <div class="export-controls">
+                <button class="export-btn" onclick="exportPDF()">📄 EXPORTER EN PDF</button>
+            </div>
+
+            <div class="critical-box">
+                <strong>🚨 PROCÉDURE D'URGENCE :</strong> À exécuter immédiatement en cas de menace imminente sur l'intégrité des données critiques.
+            </div>
+
+            <div class="section">
+                <h2>🎯 OBJECTIF</h2>
+                <p>Cette procédure définit les actions d'urgence pour sauvegarder immédiatement les données critiques de PHANTOM Corporation en cas de menace système, d'attaque informatique ou de défaillance matérielle imminente.</p>
+            </div>
+
+            <div class="section">
+                <h2>⚡ DÉCLENCHEURS D'URGENCE</h2>
+                
+                <div class="critical-box">
+                    <strong>DÉCLENCHEMENT IMMÉDIAT requis en cas de :</strong>
+                    <br>• Détection de ransomware ou malware destructeur
+                    <br>• Panne imminente de serveur critique (alertes hardware)
+                    <br>• Intrusion système confirmée avec accès aux données
+                    <br>• Corruption de données détectée
+                    <br>• Défaillance du système de sauvegarde principal
+                    <br>• Ordre d'évacuation d'urgence du site
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 PRIORITÉS DE SAUVEGARDE</h2>
+                
+                <table class="priority-table">
+                    <thead>
+                        <tr>
+                            <th>Priorité</th>
+                            <th>Type de Données</th>
+                            <th>Localisation</th>
+                            <th>Délai Max</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="priority-critical">
+                            <td><strong>P1 - CRITIQUE</strong></td>
+                            <td>Base de données PHANTOM<br>Configurations système<br>Clés de chiffrement</td>
+                            <td>/phantom/db/<br>/etc/phantom/<br>/secure/keys/</td>
+                            <td>5 minutes</td>
+                        </tr>
+                        <tr class="priority-high">
+                            <td><strong>P2 - HAUTE</strong></td>
+                            <td>Documents utilisateurs<br>Logs système<br>Paramètres réseau</td>
+                            <td>/home/users/<br>/var/log/<br>/network/config/</td>
+                            <td>15 minutes</td>
+                        </tr>
+                        <tr class="priority-normal">
+                            <td><strong>P3 - NORMALE</strong></td>
+                            <td>Archives historiques<br>Données temporaires<br>Cache système</td>
+                            <td>/archives/<br>/tmp/<br>/var/cache/</td>
+                            <td>30 minutes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>🚀 PROCÉDURE EXPRESS (5 MINUTES)</h2>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>LANCEMENT SAUVEGARDE P1</strong><br>
+                        Exécuter immédiatement le script de sauvegarde critique. Ne pas attendre la fin pour passer à l'étape suivante.
+                        <div class="command-box">
+                            sudo /phantom/scripts/emergency-backup-p1.sh
+                        </div>
+                    </li>
+                    <li>
+                        <strong>VÉRIFICATION ESPACE DISQUE</strong><br>
+                        S'assurer que l'espace disponible est suffisant sur les supports de sauvegarde d'urgence.
+                        <div class="command-box">
+                            df -h /backup/emergency/<br>
+                            df -h /mnt/usb-backup/
+                        </div>
+                    </li>
+                    <li>
+                        <strong>NOTIFICATION ÉQUIPE</strong><br>
+                        Alerter immédiatement l'équipe technique via PHANTOM et SMS que la sauvegarde d'urgence est en cours.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>🔧 COMMANDES D'URGENCE</h2>
+                
+                <h3>Sauvegarde Base de Données PHANTOM</h3>
+                <div class="command-box">
+                    # Export base de données<br>
+                    sudo mysqldump -u phantom_admin -p phantom_db > /backup/emergency/phantom_$(date +%Y%m%d_%H%M%S).sql<br>
+                    <br>
+                    # Compression immédiate<br>
+                    gzip /backup/emergency/phantom_$(date +%Y%m%d_%H%M%S).sql
+                </div>
+
+                <h3>Sauvegarde Configurations Système</h3>
+                <div class="command-box">
+                    # Sauvegarde configurations critiques<br>
+                    sudo tar -czf /backup/emergency/config_$(date +%Y%m%d_%H%M%S).tar.gz \<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;/etc/phantom/ \<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;/etc/network/ \<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;/etc/ssl/
+                </div>
+
+                <h3>Synchronisation vers Support Externe</h3>
+                <div class="command-box">
+                    # Copie sur USB/NAS d'urgence<br>
+                    sudo rsync -avz --progress /backup/emergency/ /mnt/usb-backup/<br>
+                    <br>
+                    # Vérification intégrité<br>
+                    sudo md5sum /backup/emergency/* > /backup/emergency/checksums.md5
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📡 SAUVEGARDE RÉSEAU D'URGENCE</h2>
+                
+                <div class="info-box">
+                    <strong>💡 CLOUD BACKUP :</strong> En cas de menace physique du site, activer la sauvegarde cloud d'urgence.
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>ACTIVATION TUNNEL SÉCURISÉ</strong><br>
+                        Établir une connexion VPN vers le site de backup distant.
+                        <div class="command-box">
+                            sudo openvpn /phantom/config/emergency-backup.ovpn &
+                        </div>
+                    </li>
+                    <li>
+                        <strong>TRANSFERT CHIFFRÉ</strong><br>
+                        Chiffrer et transférer les données critiques vers le serveur de sauvegarde distant.
+                        <div class="command-box">
+                            # Chiffrement des archives<br>
+                            gpg --cipher-algo AES256 --compress-algo 1 --symmetric /backup/emergency/*.tar.gz<br>
+                            <br>
+                            # Transfert sécurisé<br>
+                            scp -r /backup/emergency/*.gpg backup-user@remote-backup.phantom.corp:/secure/
+                        </div>
+                    </li>
+                    <li>
+                        <strong>VALIDATION TRANSFERT</strong><br>
+                        Vérifier que tous les fichiers ont été transférés avec succès et sont intègres.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>🔍 VÉRIFICATION POST-SAUVEGARDE</h2>
+                
+                <div class="success-box">
+                    <strong>✅ CHECKLIST DE VALIDATION</strong><br>
+                    <br><strong>☐ Base de données PHANTOM sauvegardée</strong>
+                    <br><strong>☐ Configurations système archivées</strong>
+                    <br><strong>☐ Clés de chiffrement sécurisées</strong>
+                    <br><strong>☐ Checksums générés et vérifiés</strong>
+                    <br><strong>☐ Copie sur support externe confirmée</strong>
+                    <br><strong>☐ Transfert réseau (si applicable) validé</strong>
+                    <br><strong>☐ Équipe technique notifiée</strong>
+                    <br><strong>☐ Log d'intervention complété</strong>
+                </div>
+
+                <h3>Tests d'Intégrité</h3>
+                <div class="command-box">
+                    # Vérification des checksums<br>
+                    md5sum -c /backup/emergency/checksums.md5<br>
+                    <br>
+                    # Test de restauration échantillon<br>
+                    gunzip -t /backup/emergency/phantom_*.sql.gz<br>
+                    tar -tzf /backup/emergency/config_*.tar.gz | head -10
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📋 DOCUMENTATION OBLIGATOIRE</h2>
+                
+                <div class="info-box">
+                    <strong>💡 TRAÇABILITÉ :</strong> Chaque sauvegarde d'urgence doit être documentée dans le registre des incidents.
+                </div>
+
+                <h3>Informations à Consigner</h3>
+                <ul>
+                    <li><strong>Heure de déclenchement :</strong> Date/heure exacte du début de procédure</li>
+                    <li><strong>Déclencheur :</strong> Événement ayant nécessité la sauvegarde d'urgence</li>
+                    <li><strong>Données sauvegardées :</strong> Liste détaillée des éléments archivés</li>
+                    <li><strong>Taille des archives :</strong> Volume total des données sauvegardées</li>
+                    <li><strong>Support utilisé :</strong> Type et localisation du support de sauvegarde</li>
+                    <li><strong>Durée totale :</strong> Temps nécessaire pour compléter la procédure</li>
+                    <li><strong>Problèmes rencontrés :</strong> Incidents ou difficultés durant la sauvegarde</li>
+                    <li><strong>Personnel impliqué :</strong> Noms des intervenants</li>
+                </ul>
+
+                <h3>Rapport d'Incident</h3>
+                <div class="command-box">
+                    # Génération automatique du rapport<br>
+                    sudo /phantom/scripts/generate-backup-report.sh<br>
+                    <br>
+                    # Envoi du rapport par email<br>
+                    mail -s "Sauvegarde d'urgence - $(date)" admin@phantom.corp < /logs/backup-report.txt
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔄 RESTAURATION D'URGENCE</h2>
+                
+                <div class="critical-box">
+                    <strong>⚠️ ATTENTION :</strong> La restauration depuis une sauvegarde d'urgence doit être validée par le responsable technique avant exécution.
+                </div>
+
+                <h3>Procédure de Restauration</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>VALIDATION PRÉALABLE</strong><br>
+                        Vérifier l'intégrité des archives avant toute restauration.
+                    </li>
+                    <li>
+                        <strong>ARRÊT DES SERVICES</strong><br>
+                        Stopper tous les services PHANTOM avant restauration.
+                    </li>
+                    <li>
+                        <strong>RESTAURATION SÉLECTIVE</strong><br>
+                        Restaurer uniquement les éléments nécessaires, pas l'intégralité.
+                    </li>
+                    <li>
+                        <strong>TESTS DE VALIDATION</strong><br>
+                        Effectuer des tests complets avant remise en service.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">PHANTOM CORPORATION</div>
+            <p>Procédure critique • Classification Niveau 3 • Usage interne uniquement</p>
+            <p>Temps = Données : Chaque seconde compte en situation d'urgence</p>
+        </div>
+    </div>
+
+    <script>
+        function exportPDF() {
+            const exportControls = document.querySelector('.export-controls');
+            exportControls.style.display = 'none';
+            
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    exportControls.style.display = 'block';
+                }, 1000);
+            }, 500);
+            
+            console.log('📄 Export PDF - Procédure Sauvegarde d\'Urgence');
+        }
+
+        console.log('🔄 Procédure Sauvegarde d\'Urgence - Version 2.1 chargée');
+    </script>
+</body>
+</html>
