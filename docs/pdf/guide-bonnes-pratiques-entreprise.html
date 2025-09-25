@@ -22,6 +22,7 @@
             }
             .no-print { display: none !important; }
             .page-break { page-break-before: always; }
+            .export-controls { display: none !important; }
         }
 
         * {
@@ -77,6 +78,56 @@
             padding: 40px;
         }
 
+        /* Export Controls */
+        .export-controls {
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid var(--primary-amber);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .export-title {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .export-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--secondary-amber), var(--primary-amber));
+            color: #000;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-family: 'Orbitron', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .export-btn:active {
+            transform: translateY(0);
+        }
+
         .toc {
             background: rgba(212, 165, 116, 0.1);
             padding: 30px;
@@ -113,15 +164,46 @@
 
         .section {
             margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .section h2 {
             font-family: 'Orbitron', monospace;
             color: var(--primary-amber);
             font-size: 1.8rem;
-            margin-bottom: 25px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--primary-amber);
+            margin: 0;
+        }
+
+        .section-export-btn {
+            background: rgba(212, 165, 116, 0.2);
+            color: var(--primary-amber);
+            border: 1px solid var(--primary-amber);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .section-export-btn:hover {
+            background: var(--primary-amber);
+            color: #000;
+            transform: translateY(-1px);
         }
 
         .section h3 {
@@ -222,6 +304,9 @@
             .header { padding: 30px 20px; }
             .content { padding: 20px; }
             .header h1 { font-size: 2rem; }
+            .export-buttons { justify-content: stretch; }
+            .export-btn { flex: 1; }
+            .section-header { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
@@ -234,6 +319,21 @@
         </div>
 
         <div class="content">
+            <!-- Export Controls -->
+            <div class="export-controls">
+                <div class="export-title">📄 EXPORT PDF PAR SECTION</div>
+                <div class="export-buttons">
+                    <button class="export-btn" onclick="exportSection('securite')">🔒 Sécurité</button>
+                    <button class="export-btn" onclick="exportSection('communication')">💬 Communication</button>
+                    <button class="export-btn" onclick="exportSection('gestion-temps')">⏰ Gestion Temps</button>
+                    <button class="export-btn" onclick="exportSection('travail-equipe')">👥 Équipe</button>
+                    <button class="export-btn" onclick="exportSection('documentation')">📚 Documentation</button>
+                    <button class="export-btn" onclick="exportSection('urgences')">🚨 Urgences</button>
+                    <button class="export-btn" onclick="exportSection('formation')">🎓 Formation</button>
+                    <button class="export-btn" onclick="exportFullDocument()" style="background: linear-gradient(135deg, #4A7C59, #2A5A3A); color: #fff;">📋 COMPLET</button>
+                </div>
+            </div>
+
             <!-- Table des matières -->
             <div class="toc">
                 <h2>📋 TABLE DES MATIÈRES</h2>
@@ -250,7 +350,10 @@
 
             <!-- Section 1: Sécurité -->
             <div class="section" id="securite">
-                <h2>🔒 1. SÉCURITÉ INFORMATIQUE</h2>
+                <div class="section-header">
+                    <h2>🔒 1. SÉCURITÉ INFORMATIQUE</h2>
+                    <button class="section-export-btn" onclick="exportSection('securite')">📄 Export PDF</button>
+                </div>
                 
                 <h3>1.1 Gestion des Mots de Passe</h3>
                 <div class="best-practice">
@@ -288,7 +391,10 @@
 
             <!-- Section 2: Communication -->
             <div class="section page-break" id="communication">
-                <h2>💬 2. COMMUNICATION PROFESSIONNELLE</h2>
+                <div class="section-header">
+                    <h2>💬 2. COMMUNICATION PROFESSIONNELLE</h2>
+                    <button class="section-export-btn" onclick="exportSection('communication')">📄 Export PDF</button>
+                </div>
 
                 <h3>2.1 Messagerie PHANTOM</h3>
                 <p>Notre système de messagerie sécurisée PHANTOM garantit la confidentialité de vos communications. Utilisez-le pour tous les échanges sensibles.</p>
@@ -320,7 +426,10 @@
 
             <!-- Section 3: Gestion du Temps -->
             <div class="section" id="gestion-temps">
-                <h2>⏰ 3. GESTION DU TEMPS</h2>
+                <div class="section-header">
+                    <h2>⏰ 3. GESTION DU TEMPS</h2>
+                    <button class="section-export-btn" onclick="exportSection('gestion-temps')">📄 Export PDF</button>
+                </div>
 
                 <h3>3.1 Méthode GTD (Getting Things Done)</h3>
                 <p>Système de productivité basé sur la collecte, le traitement et l'organisation des tâches.</p>
@@ -350,7 +459,10 @@
 
             <!-- Section 4: Travail en Équipe -->
             <div class="section page-break" id="travail-equipe">
-                <h2>👥 4. TRAVAIL EN ÉQUIPE</h2>
+                <div class="section-header">
+                    <h2>👥 4. TRAVAIL EN ÉQUIPE</h2>
+                    <button class="section-export-btn" onclick="exportSection('travail-equipe')">📄 Export PDF</button>
+                </div>
 
                 <h3>4.1 Principes de Collaboration</h3>
                 <p>Le travail d'équipe efficace repose sur la confiance, la communication transparente et la responsabilité partagée.</p>
@@ -378,7 +490,10 @@
 
             <!-- Section 5: Documentation -->
             <div class="section" id="documentation">
-                <h2>📚 5. DOCUMENTATION ET ARCHIVAGE</h2>
+                <div class="section-header">
+                    <h2>📚 5. DOCUMENTATION ET ARCHIVAGE</h2>
+                    <button class="section-export-btn" onclick="exportSection('documentation')">📄 Export PDF</button>
+                </div>
 
                 <h3>5.1 Standards de Documentation</h3>
                 <p>Une documentation de qualité facilite la transmission des connaissances et assure la continuité des projets.</p>
@@ -408,7 +523,10 @@
 
             <!-- Section 6: Gestion des Urgences -->
             <div class="section page-break" id="urgences">
-                <h2>🚨 6. GESTION DES URGENCES</h2>
+                <div class="section-header">
+                    <h2>🚨 6. GESTION DES URGENCES</h2>
+                    <button class="section-export-btn" onclick="exportSection('urgences')">📄 Export PDF</button>
+                </div>
 
                 <h3>6.1 Matrice d'Eisenhower</h3>
                 <p>Outil de priorisation basé sur l'urgence et l'importance des tâches.</p>
@@ -437,7 +555,10 @@
 
             <!-- Section 7: Formation Continue -->
             <div class="section" id="formation">
-                <h2>🎓 7. FORMATION CONTINUE</h2>
+                <div class="section-header">
+                    <h2>🎓 7. FORMATION CONTINUE</h2>
+                    <button class="section-export-btn" onclick="exportSection('formation')">📄 Export PDF</button>
+                </div>
 
                 <h3>7.1 Plan de Développement Personnel</h3>
                 <p>Chaque collaborateur doit établir un plan de formation annuel aligné sur ses objectifs professionnels et les besoins de l'entreprise.</p>
@@ -496,7 +617,65 @@
             });
         });
 
-        console.log('📋 Guide des Bonnes Pratiques - Version 2.0 chargée');
+        // Export PDF par section
+        function exportSection(sectionId) {
+            // Cacher tous les éléments sauf la section demandée
+            const allSections = document.querySelectorAll('.section');
+            const targetSection = document.getElementById(sectionId);
+            const toc = document.querySelector('.toc');
+            const exportControls = document.querySelector('.export-controls');
+            
+            // Sauvegarder l'état original
+            const originalDisplay = {};
+            allSections.forEach(section => {
+                originalDisplay[section.id] = section.style.display;
+                if (section.id !== sectionId) {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Masquer les controles d'export et la table des matières
+            toc.style.display = 'none';
+            exportControls.style.display = 'none';
+            
+            // Changer le titre pour la section
+            const originalTitle = document.title;
+            document.title = `${targetSection.querySelector('h2').textContent} - PHANTOM Corporation`;
+            
+            // Attendre un peu puis lancer l'impression
+            setTimeout(() => {
+                window.print();
+                
+                // Restaurer l'affichage original
+                setTimeout(() => {
+                    allSections.forEach(section => {
+                        section.style.display = originalDisplay[section.id] || 'block';
+                    });
+                    toc.style.display = 'block';
+                    exportControls.style.display = 'block';
+                    document.title = originalTitle;
+                }, 1000);
+            }, 500);
+            
+            console.log(`📄 Export PDF de la section: ${targetSection.querySelector('h2').textContent}`);
+        }
+
+        // Export du document complet
+        function exportFullDocument() {
+            const exportControls = document.querySelector('.export-controls');
+            exportControls.style.display = 'none';
+            
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    exportControls.style.display = 'block';
+                }, 1000);
+            }, 500);
+            
+            console.log('📋 Export PDF du guide complet');
+        }
+
+        console.log('📋 Guide des Bonnes Pratiques - Version 2.0 avec Export PDF chargée');
     </script>
 </body>
 </html>
