@@ -28,8 +28,7 @@
         background: var(--dark-bg);
         background-image: 
             radial-gradient(circle at 20% 50%, rgba(212, 165, 116, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(179, 153, 91, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(212, 165, 116, 0.02) 0%, transparent 50%);
+            radial-gradient(circle at 80% 20%, rgba(179, 153, 91, 0.03) 0%, transparent 50%);
         color: #fff;
         margin: 0;
         overflow-x: hidden;
@@ -37,7 +36,7 @@
         min-height: 100vh;
     }
 
-    /* Scan lines effect */
+    /* Scan lines statiques et légères */
     body::before {
         content: '';
         position: fixed;
@@ -48,34 +47,12 @@
         background: repeating-linear-gradient(
             0deg,
             transparent,
-            transparent 2px,
-            rgba(212, 165, 116, 0.02) 2px,
-            rgba(212, 165, 116, 0.02) 4px
+            transparent 4px,
+            rgba(212, 165, 116, 0.01) 4px,
+            rgba(212, 165, 116, 0.01) 6px
         );
         pointer-events: none;
         z-index: 1000;
-    }
-
-    /* Glitch noise */
-    body::after {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.015;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        animation: noise 0.3s infinite linear;
-        pointer-events: none;
-        z-index: 999;
-    }
-
-    @keyframes noise {
-        0%, 100% { transform: translate(0, 0) rotate(0deg); }
-        25% { transform: translate(-2px, 2px) rotate(0.5deg); }
-        50% { transform: translate(2px, -1px) rotate(-0.5deg); }
-        75% { transform: translate(-1px, -2px) rotate(0.3deg); }
     }
 
     header {
@@ -84,22 +61,6 @@
         padding: 24px;
         position: relative;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    }
-
-    header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--primary-amber), transparent);
-        animation: scanning 3s infinite;
-    }
-
-    @keyframes scanning {
-        0%, 100% { transform: translateX(-100%); opacity: 0; }
-        50% { transform: translateX(100%); opacity: 1; }
     }
 
     h1 {
@@ -114,11 +75,8 @@
     }
 
     h1::after {
-        content: ' ';
+        content: '█';
         display: inline-block;
-        width: 8px;
-        height: 20px;
-        background: var(--primary-amber);
         margin-left: 8px;
         animation: blink 1.5s infinite;
     }
@@ -151,31 +109,14 @@
         border-radius: 12px;
         padding: 25px;
         position: relative;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         backdrop-filter: blur(10px);
         overflow: hidden;
     }
 
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, var(--primary-amber), transparent);
-        transition: all 0.5s ease;
-    }
-
-    .card:hover::before {
-        left: 100%;
-    }
-
     .card:hover {
         border-color: var(--primary-amber);
-        box-shadow: 
-            0 8px 32px rgba(212, 165, 116, 0.15),
-            inset 0 1px 0 rgba(212, 165, 116, 0.1);
+        box-shadow: 0 8px 32px rgba(212, 165, 116, 0.15);
         transform: translateY(-2px);
     }
 
@@ -203,25 +144,8 @@
         font-weight: 600;
         font-family: 'Orbitron', monospace;
         letter-spacing: 1px;
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         border: 2px solid transparent;
-    }
-
-    .btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-        transition: all 0.5s ease;
-    }
-
-    .btn:hover::before {
-        left: 100%;
     }
 
     .btn-primary {
@@ -248,10 +172,6 @@
         box-shadow: 0 4px 15px rgba(212, 165, 116, 0.2);
     }
 
-    a {
-        color: var(--primary-amber);
-    }
-
     footer {
         text-align: center;
         padding: 30px 0;
@@ -274,7 +194,7 @@
         text-shadow: 0 0 5px var(--warning-red);
     }
 
-    /* Status indicator */
+    /* Status indicator simplifié */
     .status-indicator {
         position: fixed;
         top: 20px;
@@ -287,7 +207,6 @@
         font-size: 11px;
         color: var(--primary-amber);
         z-index: 1001;
-        backdrop-filter: blur(10px);
     }
 
     .status-dot {
@@ -297,13 +216,7 @@
         background: var(--success-green);
         border-radius: 50%;
         margin-right: 8px;
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(74, 124, 89, 0.7); }
-        70% { box-shadow: 0 0 0 8px rgba(74, 124, 89, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(74, 124, 89, 0); }
+        box-shadow: 0 0 8px var(--success-green);
     }
 
     /* Responsive */
@@ -329,25 +242,18 @@
             display: block;
             width: fit-content;
         }
-    }
-
-    /* Loading animation */
-    .loading-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 2px;
-        background: linear-gradient(90deg, var(--secondary-amber), var(--primary-amber));
-        z-index: 1002;
-        transition: width 0.3s ease;
+        
+        .grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 </head>
 <body>
-    <div class="loading-bar" id="loadingBar"></div>
     <div class="status-indicator">
-        <span class="status-dot"></span>SYSTÈME OPÉRATIONNEL
+        <span class="status-dot"></span>
+        <span id="statusText">SYSTÈME OPÉRATIONNEL</span>
+        <span id="time"></span>
     </div>
     
     <header>
@@ -359,14 +265,14 @@
             <div class="card">
                 <h2>Messagerie sécurisée</h2>
                 <p>Accès à la messagerie chiffrée de nouvelle génération avec protocoles de sécurité avancés.</p>
-                <a class="btn btn-primary" href="#" id="phantomBtn">Ouvrir Phantom</a>
+                <a class="btn btn-primary" href="http://localhost:3000" id="phantomBtn">Ouvrir Phantom</a>
             </div>
         </div>
         <div class="grid">
             <div class="card">
                 <h2>Bibliothèque sécurisée</h2>
                 <p>Accès à la bibliothèque locale avec archives cryptées et système de classification avancé.</p>
-                <a class="btn btn-ghost" href="file:///Users/axelflahaut/Desktop/Workshop/docs/index.html">Ouvrir LA Bibliothèque</a>
+                <a class="btn btn-ghost" href="docs/index.html">Ouvrir LA Bibliothèque</a>
             </div>
         </div>
     </main>
@@ -376,121 +282,47 @@
     </footer>
 
 <script>
-// Configuration système
-const systemConfig = {
-    phantomUrl: 'http://localhost:3000', // Changez cette URL pour votre serveur
-    loadingDuration: 2000,
-    glitchInterval: 8000
-};
+// Configuration ultra-simple
+const phantomUrl = 'http://localhost:3000'; // Changez cette URL
 
-// Animation de chargement au démarrage
-window.addEventListener('load', function() {
-    const loadingBar = document.getElementById('loadingBar');
-    let progress = 0;
-    
-    const loadingInterval = setInterval(() => {
-        progress += Math.random() * 15;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(loadingInterval);
-            setTimeout(() => {
-                loadingBar.style.opacity = '0';
-            }, 500);
-        }
-        loadingBar.style.width = progress + '%';
-    }, 100);
-});
-
-// Configuration du bouton Phantom
-document.addEventListener('DOMContentLoaded', function() {
-    const phantomBtn = document.getElementById('phantomBtn');
-    
-    phantomBtn.href = systemConfig.phantomUrl;
-    
-    phantomBtn.addEventListener('click', function(e) {
-        // Effet visuel au clic
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = '';
-        }, 150);
-        
-        console.log('🚀 Initialisation de Phantom...');
-        
-        // Optionnel: ouvrir dans un nouvel onglet
-        // e.preventDefault();
-        // window.open(systemConfig.phantomUrl, '_blank');
-    });
-});
-
-// Effet de glitch aléatoire sur le titre
-function triggerGlitch() {
-    const title = document.querySelector('h1');
-    title.style.animation = 'none';
-    title.style.transform = 'skew(' + (Math.random() * 2 - 1) + 'deg)';
-    title.style.filter = 'hue-rotate(' + (Math.random() * 20 - 10) + 'deg)';
-    
-    setTimeout(() => {
-        title.style.animation = '';
-        title.style.transform = '';
-        title.style.filter = '';
-    }, 200);
-}
-
-// Déclencher l'effet de glitch périodiquement
-setInterval(triggerGlitch, systemConfig.glitchInterval);
-
-// Effet de hover avancé pour les cartes
-document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.boxShadow = '0 12px 40px rgba(212, 165, 116, 0.25), inset 0 1px 0 rgba(212, 165, 116, 0.15)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.boxShadow = '';
-    });
-});
-
-// Status système temps réel
-function updateSystemStatus() {
-    const statusText = document.querySelector('.status-indicator');
+// Juste l'heure et le status (léger)
+function updateStatus() {
     const now = new Date();
-    const timeString = now.toLocaleTimeString('fr-FR', { 
-        hour12: false, 
+    const time = now.toLocaleTimeString('fr-FR', { 
         hour: '2-digit', 
         minute: '2-digit'
     });
     
-    // Changer le statut de temps en temps
+    document.getElementById('time').textContent = ' - ' + time;
+    
+    // Changer le statut toutes les 30 secondes seulement
     const statuses = [
         'SYSTÈME OPÉRATIONNEL',
         'SURVEILLANCE ACTIVE',
-        'CONNEXIONS SÉCURISÉES',
-        'PROTOCOLES CHARGÉS'
+        'CONNEXIONS SÉCURISÉES'
     ];
     
-    const currentStatus = statuses[Math.floor(now.getSeconds() / 15) % statuses.length];
-    statusText.innerHTML = `<span class="status-dot"></span>${currentStatus} - ${timeString}`;
+    const statusIndex = Math.floor(now.getSeconds() / 20);
+    document.getElementById('statusText').textContent = statuses[statusIndex % statuses.length];
 }
 
-// Mise à jour du statut toutes les secondes
-setInterval(updateSystemStatus, 1000);
-updateSystemStatus();
+// Configuration du bouton Phantom
+document.addEventListener('DOMContentLoaded', function() {
+    const phantomBtn = document.getElementById('phantomBtn');
+    phantomBtn.href = phantomUrl;
+    
+    // Juste un effet simple au clic
+    phantomBtn.addEventListener('click', function() {
+        console.log('🚀 Lancement de Phantom...');
+    });
+    
+    // Mise à jour du statut
+    updateStatus();
+    setInterval(updateStatus, 60000); // Toutes les minutes seulement
+});
 
-// Effet sonore simulé dans la console
-console.log(`
-╔══════════════════════════════════════╗
-║     PHANTOM INTRANET SYSTÈME         ║
-║           VERSION 2.0.1              ║
-║      CHARGEMENT TERMINÉ [✓]          ║
-╚══════════════════════════════════════╝
-
-🔧 Configuration:
-   - Serveur: ${systemConfig.phantomUrl}
-   - Sécurité: Niveau Maximum
-   - Status: Opérationnel
-
-💡 Pour modifier l'URL Phantom, changez 'phantomUrl' dans systemConfig
-`);
+// Log simple
+console.log('📡 PHANTOM Intranet - Système chargé - Serveur:', phantomUrl);
 </script>
 </body>
 </html>
