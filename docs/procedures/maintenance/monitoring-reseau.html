@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procédure Monitoring Réseau - PHANTOM Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-amber: #D4A574;
+            --secondary-amber: #B3995B;
+            --dark-bg: #0D0D0D;
+            --card-bg: #1A1A1A;
+            --text-light: #f5f5f5;
+            --text-dim: #cccccc;
+            --warning-red: #CC4125;
+            --success-green: #4A7C59;
+        }
+
+        @media print {
+            body { background: white !important; color: #333 !important; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .export-controls { display: none !important; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-amber), var(--secondary-amber));
+            color: #000;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .procedure-meta {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        .content { padding: 30px; }
+
+        .export-controls {
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid var(--primary-amber);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--secondary-amber), var(--primary-amber));
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .nav-breadcrumb {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--secondary-amber);
+            text-decoration: none;
+        }
+
+        .nav-breadcrumb a:hover { color: var(--primary-amber); }
+
+        .section { margin-bottom: 30px; }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-amber);
+        }
+
+        .section h3 {
+            color: var(--secondary-amber);
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .section p { margin-bottom: 15px; text-align: justify; }
+
+        .warning-box {
+            background: rgba(204, 65, 37, 0.1);
+            border-left: 4px solid var(--warning-red);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--primary-amber);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: rgba(74, 124, 89, 0.1);
+            border-left: 4px solid var(--success-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: var(--primary-amber);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .metrics-table th,
+        .metrics-table td {
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .metrics-table th {
+            background: rgba(212, 165, 116, 0.2);
+            color: var(--primary-amber);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+
+        .status-ok { color: var(--success-green); font-weight: 600; }
+        .status-warning { color: var(--primary-amber); font-weight: 600; }
+        .status-critical { color: var(--warning-red); font-weight: 600; }
+
+        .dashboard-box {
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .dashboard-box h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .metric-item:last-child { border-bottom: none; }
+
+        .checklist {
+            background: rgba(212, 165, 116, 0.05);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: var(--primary-amber);
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            background: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 MONITORING RÉSEAU PHANTOM</h1>
+            <div class="procedure-meta">
+                Classification: ROUTINE • Version 1.3 • Mise à jour: 12/03/2025
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="nav-breadcrumb no-print">
+                <a href="../../index.html">Archives</a> > 
+                <a href="../index.html">Procédures</a> > 
+                Monitoring Réseau
+            </div>
+
+            <div class="export-controls">
+                <button class="export-btn" onclick="exportPDF()">📄 EXPORTER EN PDF</button>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 OBJECTIF :</strong> Cette procédure définit la surveillance continue des performances réseau PHANTOM et les actions à entreprendre en cas de détection d'anomalies.
+            </div>
+
+            <div class="section">
+                <h2>📈 MÉTRIQUES DE SURVEILLANCE</h2>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Métrique</th>
+                            <th>Seuil Normal</th>
+                            <th>Seuil Alerte</th>
+                            <th>Seuil Critique</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Latence réseau</td>
+                            <td class="status-ok">< 10ms</td>
+                            <td class="status-warning">10-50ms</td>
+                            <td class="status-critical">> 50ms</td>
+                        </tr>
+                        <tr>
+                            <td>Bande passante utilisée</td>
+                            <td class="status-ok">< 70%</td>
+                            <td class="status-warning">70-90%</td>
+                            <td class="status-critical">> 90%</td>
+                        </tr>
+                        <tr>
+                            <td>Perte de paquets</td>
+                            <td class="status-ok">< 0.1%</td>
+                            <td class="status-warning">0.1-1%</td>
+                            <td class="status-critical">> 1%</td>
+                        </tr>
+                        <tr>
+                            <td>Connexions actives</td>
+                            <td class="status-ok">< 500</td>
+                            <td class="status-warning">500-800</td>
+                            <td class="status-critical">> 800</td>
+                        </tr>
+                        <tr>
+                            <td>Utilisation CPU switch</td>
+                            <td class="status-ok">< 60%</td>
+                            <td class="status-warning">60-80%</td>
+                            <td class="status-critical">> 80%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <strong>⚠️ SEUILS CRITIQUES :</strong> Le dépassement d'un seuil critique déclenche une alerte immédiate et nécessite une intervention dans les 15 minutes.
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎛️ TABLEAU DE BORD PRINCIPAL</h2>
+                
+                <div class="dashboard-box">
+                    <h4>📊 Vue d'Ensemble Réseau</h4>
+                    <div class="metric-item">
+                        <span><strong>État Infrastructure :</strong></span>
+                        <span class="status-ok">OPÉRATIONNEL</span>
+                    </div>
+                    <div class="metric-item">
+                        <span><strong>Switches Principaux :</strong></span>
+                        <span class="status-ok">3/3 ACTIFS</span>
+                    </div>
+                    <div class="metric-item">
+                        <span><strong>Liens WAN :</strong></span>
+                        <span class="status-ok">REDONDANCE OK</span>
+                    </div>
+                    <div class="metric-item">
+                        <span><strong>Serveurs PHANTOM :</strong></span>
+                        <span class="status-ok">TOUS CONNECTÉS</span>
+                    </div>
+                    <div class="metric-item">
+                        <span><strong>Utilisateurs Actifs :</strong></span>
+                        <span>127/500</span>
+                    </div>
+                </div>
+
+                <h3>Outils de Monitoring</h3>
+                <ul>
+                    <li><strong>PRTG Network Monitor :</strong> Surveillance temps réel de l'infrastructure</li>
+                    <li><strong>Wireshark :</strong> Analyse approfondie des paquets réseau</li>
+                    <li><strong>Nagios :</strong> Alerting et notifications automatisées</li>
+                    <li><strong>Grafana :</strong> Tableaux de bord personnalisés</li>
+                    <li><strong>PHANTOM Monitor :</strong> Monitoring spécifique applications</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>🔄 SURVEILLANCE QUOTIDIENNE</h2>
+                
+                <h3>Contrôles Matinaux (08h00)</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>VÉRIFICATION TABLEAU DE BORD</strong><br>
+                        Consulter le dashboard principal PRTG. Identifier les alertes actives et leur historique. Vérifier l'état de tous les équipements critiques.
+                    </li>
+                    <li>
+                        <strong>ANALYSE DES MÉTRIQUES</strong><br>
+                        Examiner les graphiques de performance des dernières 24h. Détecter les anomalies ou tendances inhabituelles. Comparer avec les seuils définis.
+                    </li>
+                    <li>
+                        <strong>CONTRÔLE CONNECTIVITÉ</strong><br>
+                        Tester la connectivité vers tous les serveurs PHANTOM. Vérifier les temps de réponse des services critiques. Valider l'accès Internet et DNS.
+                    </li>
+                    <li>
+                        <strong>RAPPORT QUOTIDIEN</strong><br>
+                        Documenter l'état général du réseau. Noter les incidents résolus et les actions préventives. Planifier les interventions nécessaires.
+                    </li>
+                </ol>
+
+                <div class="checklist">
+                    <h4>✅ Checklist Contrôles Quotidiens</h4>
+                    <ul>
+                        <li>Dashboard PRTG consulté et analysé</li>
+                        <li>Alertes critiques traitées</li>
+                        <li>Tests de connectivité effectués</li>
+                        <li>Métriques performance dans les seuils</li>
+                        <li>Sauvegarde configs réseau OK</li>
+                        <li>Logs systèmes vérifiés</li>
+                        <li>Rapport quotidien rédigé</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 SURVEILLANCE HEBDOMADAIRE</h2>
+                
+                <h3>Analyse Approfondie (Lundi 09h00)</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>ANALYSE TENDANCES</strong><br>
+                        Examiner les tendances sur 7 jours. Identifier les pics d'utilisation et leurs causes. Analyser l'évolution de la bande passante.
+                    </li>
+                    <li>
+                        <strong>OPTIMISATION PERFORMANCE</strong><br>
+                        Identifier les goulots d'étranglement potentiels. Proposer des ajustements de configuration. Planifier les montées en charge.
+                    </li>
+                    <li>
+                        <strong>MAINTENANCE PRÉVENTIVE</strong><br>
+                        Vérifier l'état des équipements réseau. Contrôler les versions firmware et les correctifs. Tester les procédures de basculement.
+                    </li>
+                    <li>
+                        <strong>DOCUMENTATION</strong><br>
+                        Mettre à jour la cartographie réseau. Documenter les modifications apportées. Archiver les rapports d'analyse.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section page-break">
+                <h2>🚨 GESTION DES ALERTES</h2>
+                
+                <h3>Classification des Alertes</h3>
+                <div class="warning-box">
+                    <strong>⚠️ NIVEAUX D'ALERTE :</strong>
+                    <br>• <strong>INFO :</strong> Information, pas d'action requise
+                    <br>• <strong>WARNING :</strong> Surveillance renforcée, action préventive
+                    <br>• <strong>CRITICAL :</strong> Intervention immédiate requise
+                    <br>• <strong>EMERGENCY :</strong> Panne majeure, escalade automatique
+                </div>
+
+                <h3>Procédure de Traitement</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>RÉCEPTION ALERTE</strong><br>
+                        Accuser réception dans les 5 minutes. Évaluer la criticité et l'impact. Documenter l'heure de début d'incident.
+                    </li>
+                    <li>
+                        <strong>DIAGNOSTIC INITIAL</strong><br>
+                        Identifier la source du problème via les outils de monitoring. Vérifier l'état des équipements concernés. Estimer l'impact utilisateur.
+                    </li>
+                    <li>
+                        <strong>ACTION CORRECTIVE</strong><br>
+                        Appliquer la procédure de résolution appropriée. Surveiller l'évolution en temps réel. Documenter les actions entreprises.
+                    </li>
+                    <li>
+                        <strong>VALIDATION RÉSOLUTION</strong><br>
+                        Confirmer le retour à la normale des métriques. Valider avec les utilisateurs impactés. Clôturer l'alerte dans le système.
+                    </li>
+                </ol>
+
+                <h3>Temps de Réponse Requis</h3>
+                <div class="success-box">
+                    <strong>✅ SLA INTERNES :</strong>
+                    <br>• <strong>CRITICAL :</strong> Réponse < 15 min, Résolution < 4h
+                    <br>• <strong>WARNING :</strong> Réponse < 1h, Résolution < 24h
+                    <br>• <strong>INFO :</strong> Réponse < 4h, Traitement selon planning
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔧 ACTIONS CORRECTIVES</h2>
+                
+                <h3>Problèmes Courants</h3>
+                <div class="info-box">
+                    <strong>💡 RÉSOLUTIONS RAPIDES :</strong>
+                    <br>• <strong>Latence élevée :</strong> Vérifier QoS, redémarrer équipements
+                    <br>• <strong>Perte paquets :</strong> Contrôler câblage, analyser collision
+                    <br>• <strong>Saturation BP :</strong> Identifier trafic anormal, appliquer limitations
+                    <br>• <strong>Déconnexions :</strong> Vérifier alimentations, contrôler logs
+                </div>
+
+                <h3>Procédures d'Escalade</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>NIVEAU 1 - TECHNICIEN</strong><br>
+                        Actions de base : redémarrages, vérifications standard. Durée maximale : 30 minutes avant escalade.
+                    </li>
+                    <li>
+                        <strong>NIVEAU 2 - EXPERT RÉSEAU</strong><br>
+                        Diagnostic avancé, modifications configuration. Contact constructeurs si nécessaire.
+                    </li>
+                    <li>
+                        <strong>NIVEAU 3 - RESPONSABLE IT</strong><br>
+                        Décisions d'architecture, budget interventions externes. Communication direction générale.
+                    </li>
+                </ol>
+
+                <h3>Contacts Techniques</h3>
+                <div class="info-box">
+                    <strong>📞 SUPPORT RÉSEAU :</strong>
+                    <br>• Technicien réseau : +33 6 11 22 33 44
+                    <br>• Expert infrastructure : +33 6 55 66 77 88
+                    <br>• Astreinte weekend : +33 6 99 88 77 66
+                    <br>• Support constructeur : 0800 123 456
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📋 REPORTING ET DOCUMENTATION</h2>
+                
+                <h3>Rapports Réguliers</h3>
+                <div class="checklist">
+                    <h4>📊 Périodicité des Rapports</h4>
+                    <ul>
+                        <li><strong>Quotidien :</strong> État réseau, incidents, actions</li>
+                        <li><strong>Hebdomadaire :</strong> Analyse performances, tendances</li>
+                        <li><strong>Mensuel :</strong> SLA, statistiques, recommandations</li>
+                        <li><strong>Trimestriel :</strong> Évolution infrastructure, budget</li>
+                        <li><strong>Annuel :</strong> Bilan complet, plan amélioration</li>
+                    </ul>
+                </div>
+
+                <h3>Métriques de Performance</h3>
+                <div class="dashboard-box">
+                    <h4>📈 KPI Réseau</h4>
+                    <div class="metric-item">
+                        <span><strong>Disponibilité Réseau :</strong></span>
+                        <span class="status-ok">99.97%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span><strong>Temps Moyen Résolution :</strong></span>
+                        <span>2h 15min</span>
+                    </div>
+                    <div class="metric-item">
+                        <span><strong>Incidents ce mois :</strong></span>
+                        <span class="status-warning">3</span>
+                    </div>
+                    <div class="metric-item">
+                        <span><strong>Satisfaction Utilisateurs :</strong></span>
+                        <span class="status-ok">96%</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">PHANTOM CORPORATION</div>
+            <p>Document confidentiel • Classification ROUTINE • Usage interne uniquement</p>
+            <p>Version 1.3 • Dernière révision : 12/03/2025</p>
+            <p>Contact technique : network@phantom-corp.internal</p>
+        </div>
+    </div>
+
+    <script>
+        // Export PDF
+        function exportPDF() {
+            const exportControls = document.querySelector('.export-controls');
+            exportControls.style.display = 'none';
+            
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    exportControls.style.display = 'block';
+                }, 1000);
+            }, 500);
+            
+            console.log('📄 Export PDF - Procédure Monitoring Réseau');
+        }
+
+        console.log('📊 Procédure Monitoring Réseau - Version 1.3 chargée');
+    </script>
+</body>
+</html>

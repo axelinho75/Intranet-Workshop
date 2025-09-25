@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procédure Mise à Jour Système - PHANTOM Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-amber: #D4A574;
+            --secondary-amber: #B3995B;
+            --dark-bg: #0D0D0D;
+            --card-bg: #1A1A1A;
+            --text-light: #f5f5f5;
+            --text-dim: #cccccc;
+            --warning-red: #CC4125;
+            --success-green: #4A7C59;
+        }
+
+        @media print {
+            body { background: white !important; color: #333 !important; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .export-controls { display: none !important; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-amber), var(--secondary-amber));
+            color: #000;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .procedure-meta {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        .content { padding: 30px; }
+
+        .export-controls {
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid var(--primary-amber);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--secondary-amber), var(--primary-amber));
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .nav-breadcrumb {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--secondary-amber);
+            text-decoration: none;
+        }
+
+        .nav-breadcrumb a:hover { color: var(--primary-amber); }
+
+        .section { margin-bottom: 30px; }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-amber);
+        }
+
+        .section h3 {
+            color: var(--secondary-amber);
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .section p { margin-bottom: 15px; text-align: justify; }
+
+        .warning-box {
+            background: rgba(204, 65, 37, 0.1);
+            border-left: 4px solid var(--warning-red);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--primary-amber);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: rgba(74, 124, 89, 0.1);
+            border-left: 4px solid var(--success-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: var(--primary-amber);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .update-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .update-table th,
+        .update-table td {
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .update-table th {
+            background: rgba(212, 165, 116, 0.2);
+            color: var(--primary-amber);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+
+        .criticality-high { color: var(--warning-red); font-weight: 600; }
+        .criticality-medium { color: var(--primary-amber); font-weight: 600; }
+        .criticality-low { color: var(--success-green); font-weight: 600; }
+
+        .checklist {
+            background: rgba(212, 165, 116, 0.05);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: var(--primary-amber);
+            font-size: 1.2rem;
+        }
+
+        .command-box {
+            background: #000;
+            border: 1px solid var(--primary-amber);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-amber);
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        .footer {
+            background: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 MISE À JOUR SYSTÈME PHANTOM</h1>
+            <div class="procedure-meta">
+                Classification: IMPORTANT • Version 2.5 • Mise à jour: 18/03/2025
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="nav-breadcrumb no-print">
+                <a href="../../index.html">Archives</a> > 
+                <a href="../index.html">Procédures</a> > 
+                Mise à Jour Système
+            </div>
+
+            <div class="export-controls">
+                <button class="export-btn" onclick="exportPDF()">📄 EXPORTER EN PDF</button>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 OBJECTIF :</strong> Cette procédure définit le processus de mise à jour sécurisée des composants système et applications critiques PHANTOM pour maintenir la sécurité et les performances.
+            </div>
+
+            <div class="section">
+                <h2>📊 CLASSIFICATION DES MISES À JOUR</h2>
+                
+                <table class="update-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Criticité</th>
+                            <th>Délai</th>
+                            <th>Fenêtre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Correctifs de sécurité critiques</td>
+                            <td class="criticality-high">CRITIQUE</td>
+                            <td>24-48h</td>
+                            <td>Immédiate</td>
+                        </tr>
+                        <tr>
+                            <td>Correctifs de sécurité importants</td>
+                            <td class="criticality-medium">HAUTE</td>
+                            <td>7 jours</td>
+                            <td>Planifiée</td>
+                        </tr>
+                        <tr>
+                            <td>Mises à jour fonctionnelles</td>
+                            <td class="criticality-medium">MOYENNE</td>
+                            <td>30 jours</td>
+                            <td>Maintenance</td>
+                        </tr>
+                        <tr>
+                            <td>Mises à jour mineures</td>
+                            <td class="criticality-low">FAIBLE</td>
+                            <td>90 jours</td>
+                            <td>Maintenance</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <strong>⚠️ SÉCURITÉ :</strong> Toute vulnérabilité critique (CVSS ≥ 9.0) nécessite une intervention d'urgence dans les 24h suivant la publication du correctif.
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔍 PHASE DE PRÉPARATION</h2>
+                
+                <h3>1. Analyse et Planification</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>INVENTAIRE SYSTÈME</strong><br>
+                        Recenser tous les composants à mettre à jour : OS, applications PHANTOM, services, pilotes. Vérifier les versions actuelles et les dépendances.
+                    </li>
+                    <li>
+                        <strong>ÉVALUATION DES RISQUES</strong><br>
+                        Analyser l'impact potentiel de chaque mise à jour. Identifier les composants critiques et les points de défaillance possibles.
+                    </li>
+                    <li>
+                        <strong>PLAN DE ROLLBACK</strong><br>
+                        Préparer la procédure de retour en arrière complète. Documenter les points de restauration et les sauvegardes nécessaires.
+                    </li>
+                </ol>
+
+                <h3>2. Préparation de l'Environnement</h3>
+                <div class="checklist">
+                    <h4>✅ Pré-requis Obligatoires</h4>
+                    <ul>
+                        <li>Sauvegarde complète validée et testée</li>
+                        <li>Snapshot des machines virtuelles</li>
+                        <li>Notification utilisateurs 48h avant</li>
+                        <li>Équipe technique disponible</li>
+                        <li>Environnement de test configuré</li>
+                        <li>Documentation des configurations actuelles</li>
+                        <li>Plan de communication défini</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🧪 PHASE DE TEST</h2>
+                
+                <h3>Environnement de Qualification</h3>
+                <div class="success-box">
+                    <strong>✅ RÈGLE D'OR :</strong> Aucune mise à jour ne doit être appliquée en production sans avoir été testée et validée en environnement de qualification.
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>DÉPLOIEMENT EN TEST</strong><br>
+                        Appliquer les mises à jour sur l'environnement de qualification. Respecter l'ordre de déploiement défini (OS → middleware → applications).
+                    </li>
+                    <li>
+                        <strong>TESTS FONCTIONNELS</strong><br>
+                        Exécuter la suite de tests automatisés PHANTOM. Valider les fonctionnalités critiques et les intégrations métier.
+                    </li>
+                    <li>
+                        <strong>TESTS DE PERFORMANCE</strong><br>
+                        Mesurer l'impact sur les performances système. Comparer avec les métriques de référence et valider l'absence de régression.
+                    </li>
+                    <li>
+                        <strong>TESTS DE SÉCURITÉ</strong><br>
+                        Scanner les vulnérabilités résiduelles. Vérifier l'intégrité des configurations de sécurité et des certificats.
+                    </li>
+                </ol>
+
+                <h3>Validation des Tests</h3>
+                <div class="info-box">
+                    <strong>💡 CRITÈRES DE VALIDATION :</strong>
+                    <br>• Tous les tests automatisés passent (100%)
+                    <br>• Aucune régression de performance (>5%)
+                    <br>• Fonctionnalités critiques opérationnelles
+                    <br>• Validation équipe métier obtenue
+                </div>
+            </div>
+
+            <div class="section page-break">
+                <h2>🚀 PHASE DE DÉPLOIEMENT</h2>
+                
+                <h3>Déploiement Production</h3>
+                <div class="warning-box">
+                    <strong>⚠️ FENÊTRE DE MAINTENANCE :</strong> Dimanche 02h00 - 06h00 ou selon planification d'urgence pour les correctifs critiques.
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>PRÉPARATION DÉPLOIEMENT</strong><br>
+                        Vérifier la disponibilité de l'équipe. Valider l'état des systèmes cibles. Activer le mode maintenance si nécessaire.
+                    </li>
+                    <li>
+                        <strong>SAUVEGARDE FINALE</strong><br>
+                        Effectuer une sauvegarde à chaud immédiatement avant déploiement. Vérifier l'intégrité et la restaurabilité des sauvegardes.
+                    </li>
+                    <li>
+                        <strong>DÉPLOIEMENT PROGRESSIF</strong><br>
+                        Appliquer les mises à jour par ordre de criticité décroissante. Valider chaque étape avant passage à la suivante.
+                    </li>
+                    <li>
+                        <strong>REDÉMARRAGE SERVICES</strong><br>
+                        Redémarrer les services dans l'ordre défini. Surveiller les logs en temps réel pour détecter les anomalies.
+                    </li>
+                </ol>
+
+                <h3>Commandes Système Courantes</h3>
+                <div class="command-box">
+# Mise à jour système Ubuntu/Debian
+sudo apt update && sudo apt upgrade -y
+
+# Mise à jour CentOS/RHEL
+sudo yum update -y
+
+# Redémarrage services PHANTOM
+sudo systemctl restart phantom-core
+sudo systemctl restart phantom-db
+sudo systemctl restart phantom-web
+
+# Vérification statut
+sudo systemctl status phantom-*
+</div>
+            </div>
+
+            <div class="section">
+                <h2>✅ PHASE DE VALIDATION</h2>
+                
+                <h3>Tests Post-Déploiement</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>TESTS DE FUMÉE</strong><br>
+                        Vérifier que tous les services PHANTOM démarrent correctement. Tester les connexions utilisateur et l'accès aux fonctionnalités de base.
+                    </li>
+                    <li>
+                        <strong>MONITORING INTENSIF</strong><br>
+                        Surveiller les métriques système pendant 2h minimum. Analyser les logs d'erreur et les alertes de performance.
+                    </li>
+                    <li>
+                        <strong>VALIDATION MÉTIER</strong><br>
+                        Faire valider les fonctionnalités critiques par les utilisateurs référents. Confirmer l'absence d'impact sur les processus métier.
+                    </li>
+                    <li>
+                        <strong>DOCUMENTATION</strong><br>
+                        Mettre à jour l'inventaire des versions. Documenter les modifications apportées et les éventuels ajustements.
+                    </li>
+                </ol>
+
+                <div class="checklist">
+                    <h4>📋 Checklist de Validation</h4>
+                    <ul>
+                        <li>Tous les services PHANTOM opérationnels</li>
+                        <li>Connectivité réseau et bases de données OK</li>
+                        <li>Tests de fumée réussis (100%)</li>
+                        <li>Métriques de performance dans les seuils</li>
+                        <li>Aucune alerte critique générée</li>
+                        <li>Validation utilisateurs obtenue</li>
+                        <li>Documentation mise à jour</li>
+                        <li>Sauvegarde post-déploiement effectuée</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔄 PROCÉDURES DE ROLLBACK</h2>
+                
+                <h3>Critères de Rollback</h3>
+                <div class="warning-box">
+                    <strong>⚠️ ROLLBACK IMMÉDIAT SI :</strong>
+                    <br>• Service critique indisponible > 15 min
+                    <br>• Dégradation performance > 20%
+                    <br>• Erreurs critiques dans les logs
+                    <br>• Échec validation métier
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>ARRÊT D'URGENCE</strong><br>
+                        Stopper immédiatement le déploiement en cours. Isoler les systèmes impactés du réseau si nécessaire.
+                    </li>
+                    <li>
+                        <strong>RESTAURATION SYSTÈME</strong><br>
+                        Restaurer depuis les sauvegardes ou snapshots. Redémarrer avec la configuration précédente validée.
+                    </li>
+                    <li>
+                        <strong>VALIDATION ROLLBACK</strong><br>
+                        Vérifier le retour à l'état fonctionnel. Confirmer la restauration complète des services.
+                    </li>
+                    <li>
+                        <strong>ANALYSE POST-MORTEM</strong><br>
+                        Analyser les causes de l'échec. Documenter les leçons apprises et ajuster la procédure.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>📊 GESTION DES URGENCES</h2>
+                
+                <h3>Correctifs de Sécurité Critiques</h3>
+                <div class="warning-box">
+                    <strong>⚠️ PROCÉDURE D'URGENCE :</strong> En cas de vulnérabilité critique (0-day), activation possible 24h/24 avec validation direction.
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>ÉVALUATION EXPRESS</strong><br>
+                        Analyser la criticité et l'exposition. Évaluer le risque de ne pas appliquer le correctif vs le risque d'instabilité.
+                    </li>
+                    <li>
+                        <strong>VALIDATION ACCÉLÉRÉE</strong><br>
+                        Tests réduits mais obligatoires en environnement de qualification. Durée maximale : 4 heures.
+                    </li>
+                    <li>
+                        <strong>DÉPLOIEMENT D'URGENCE</strong><br>
+                        Application immédiate avec équipe technique complète mobilisée. Surveillance renforcée 24h.
+                    </li>
+                </ol>
+
+                <h3>Contacts d'Escalade</h3>
+                <div class="info-box">
+                    <strong>📞 CONTACTS URGENTS :</strong>
+                    <br>• Responsable Sécurité : +33 1 23 45 67 89
+                    <br>• Astreinte Technique : +33 6 12 34 56 78
+                    <br>• Direction IT : +33 1 98 76 54 32
+                    <br>• CERT/CISO : +33 1 11 22 33 44
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">PHANTOM CORPORATION</div>
+            <p>Document confidentiel • Classification IMPORTANT • Usage interne uniquement</p>
+            <p>Version 2.5 • Dernière révision : 18/03/2025</p>
+            <p>Contact technique : updates@phantom-corp.internal</p>
+        </div>
+    </div>
+
+    <script>
+        // Export PDF
+        function exportPDF() {
+            const exportControls = document.querySelector('.export-controls');
+            exportControls.style.display = 'none';
+            
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    exportControls.style.display = 'block';
+                }, 1000);
+            }, 500);
+            
+            console.log('📄 Export PDF - Procédure Mise à Jour Système');
+        }
+
+        console.log('🔧 Procédure Mise à Jour Système - Version 2.5 chargée');
+    </script>
+</body>
+</html>
