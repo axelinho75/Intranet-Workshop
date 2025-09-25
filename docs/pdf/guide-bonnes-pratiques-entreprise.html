@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide des Bonnes Pratiques d'Entreprise - PHANTOM Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-amber: #D4A574;
+            --secondary-amber: #B3995B;
+            --dark-bg: #0D0D0D;
+            --card-bg: #1A1A1A;
+            --text-light: #f5f5f5;
+            --text-dim: #cccccc;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: #333 !important;
+            }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--secondary-amber), var(--primary-amber));
+            color: #000;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .header .version {
+            font-size: 0.9rem;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .toc {
+            background: rgba(212, 165, 116, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .toc h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+        }
+
+        .toc a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: var(--primary-amber);
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-amber);
+        }
+
+        .section h3 {
+            color: var(--secondary-amber);
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .best-practice {
+            background: rgba(74, 124, 89, 0.1);
+            border-left: 4px solid #4A7C59;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background: rgba(204, 65, 37, 0.1);
+            border-left: 4px solid #CC4125;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--primary-amber);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .checklist {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: var(--primary-amber);
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            background: var(--card-bg);
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header { padding: 30px 20px; }
+            .content { padding: 20px; }
+            .header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GUIDE DES BONNES PRATIQUES</h1>
+            <div class="subtitle">Manuel de Référence Professionnel</div>
+            <div class="version">PHANTOM Corporation • Version 2.0 • Mars 2025</div>
+        </div>
+
+        <div class="content">
+            <!-- Table des matières -->
+            <div class="toc">
+                <h2>📋 TABLE DES MATIÈRES</h2>
+                <ul>
+                    <li><a href="#securite">1. Sécurité Informatique</a></li>
+                    <li><a href="#communication">2. Communication Professionnelle</a></li>
+                    <li><a href="#gestion-temps">3. Gestion du Temps</a></li>
+                    <li><a href="#travail-equipe">4. Travail en Équipe</a></li>
+                    <li><a href="#documentation">5. Documentation et Archivage</a></li>
+                    <li><a href="#urgences">6. Gestion des Urgences</a></li>
+                    <li><a href="#formation">7. Formation Continue</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: Sécurité -->
+            <div class="section" id="securite">
+                <h2>🔒 1. SÉCURITÉ INFORMATIQUE</h2>
+                
+                <h3>1.1 Gestion des Mots de Passe</h3>
+                <div class="best-practice">
+                    <strong>✅ BONNE PRATIQUE :</strong> Utilisez des mots de passe uniques pour chaque service avec au minimum 12 caractères incluant majuscules, minuscules, chiffres et symboles.
+                </div>
+                
+                <p>La sécurité de vos accès est primordiale. Chaque compte doit posséder un mot de passe unique et complexe. L'utilisation d'un gestionnaire de mots de passe est fortement recommandée.</p>
+
+                <div class="checklist">
+                    <h4>📝 Checklist Sécurité des Mots de Passe</h4>
+                    <ul>
+                        <li>Minimum 12 caractères</li>
+                        <li>Combinaison de majuscules et minuscules</li>
+                        <li>Au moins 2 chiffres</li>
+                        <li>Au moins 1 caractère spécial</li>
+                        <li>Pas d'informations personnelles</li>
+                        <li>Changement tous les 90 jours pour les comptes critiques</li>
+                    </ul>
+                </div>
+
+                <h3>1.2 Authentification à Deux Facteurs (2FA)</h3>
+                <div class="info-box">
+                    <strong>💡 INFO :</strong> L'activation du 2FA réduit de 99,9% les risques de compromission de compte selon Microsoft.
+                </div>
+
+                <p>L'authentification à deux facteurs ajoute une couche de sécurité supplémentaire. Elle doit être activée sur tous les comptes professionnels critiques.</p>
+
+                <h3>1.3 Sécurité des E-mails</h3>
+                <div class="warning-box">
+                    <strong>⚠️ ATTENTION :</strong> Ne jamais cliquer sur des liens suspects ou ouvrir des pièces jointes non vérifiées. En cas de doute, contacter le service IT.
+                </div>
+
+                <p>Les attaques de phishing représentent 90% des cyberattaques. La vigilance est votre première ligne de défense.</p>
+            </div>
+
+            <!-- Section 2: Communication -->
+            <div class="section page-break" id="communication">
+                <h2>💬 2. COMMUNICATION PROFESSIONNELLE</h2>
+
+                <h3>2.1 Messagerie PHANTOM</h3>
+                <p>Notre système de messagerie sécurisée PHANTOM garantit la confidentialité de vos communications. Utilisez-le pour tous les échanges sensibles.</p>
+
+                <div class="best-practice">
+                    <strong>✅ PROTOCOLE :</strong> Toute information classifiée doit transiter exclusivement par PHANTOM avec chiffrement end-to-end activé.
+                </div>
+
+                <h3>2.2 Rédaction d'E-mails</h3>
+                <ul>
+                    <li><strong>Objet clair :</strong> Résumez le contenu en moins de 10 mots</li>
+                    <li><strong>Structure :</strong> Introduction, corps du message, conclusion</li>
+                    <li><strong>Politesse :</strong> Formules de politesse appropriées</li>
+                    <li><strong>Relecture :</strong> Vérifiez orthographe et grammaire</li>
+                </ul>
+
+                <h3>2.3 Réunions Virtuelles</h3>
+                <div class="checklist">
+                    <h4>📝 Checklist Réunion Efficace</h4>
+                    <ul>
+                        <li>Ordre du jour envoyé 24h avant</li>
+                        <li>Durée limitée (max 60 minutes)</li>
+                        <li>Participants limités aux personnes concernées</li>
+                        <li>Micro coupé par défaut</li>
+                        <li>Compte-rendu envoyé dans les 24h</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3: Gestion du Temps -->
+            <div class="section" id="gestion-temps">
+                <h2>⏰ 3. GESTION DU TEMPS</h2>
+
+                <h3>3.1 Méthode GTD (Getting Things Done)</h3>
+                <p>Système de productivité basé sur la collecte, le traitement et l'organisation des tâches.</p>
+
+                <div class="info-box">
+                    <strong>💡 PRINCIPE :</strong> "Votre esprit est fait pour avoir des idées, pas pour les retenir" - David Allen
+                </div>
+
+                <ol>
+                    <li><strong>Collecter :</strong> Notez tout dans une boîte de réception unique</li>
+                    <li><strong>Clarifier :</strong> Que dois-je faire avec cet élément ?</li>
+                    <li><strong>Organiser :</strong> Classez selon le contexte et la priorité</li>
+                    <li><strong>Réviser :</strong> Examinez régulièrement vos listes</li>
+                    <li><strong>Agir :</strong> Choisissez et exécutez les actions</li>
+                </ol>
+
+                <h3>3.2 Technique Pomodoro</h3>
+                <p>Méthode de gestion du temps basée sur des intervalles de travail de 25 minutes.</p>
+
+                <div class="best-practice">
+                    <strong>✅ CYCLE POMODORO :</strong>
+                    <br>• 25 min de travail concentré
+                    <br>• 5 min de pause
+                    <br>• Après 4 cycles : pause longue de 30 min
+                </div>
+            </div>
+
+            <!-- Section 4: Travail en Équipe -->
+            <div class="section page-break" id="travail-equipe">
+                <h2>👥 4. TRAVAIL EN ÉQUIPE</h2>
+
+                <h3>4.1 Principes de Collaboration</h3>
+                <p>Le travail d'équipe efficace repose sur la confiance, la communication transparente et la responsabilité partagée.</p>
+
+                <div class="best-practice">
+                    <strong>✅ RÈGLE D'OR :</strong> Communiquez tôt et souvent. Un problème signalé à temps est un problème à moitié résolu.
+                </div>
+
+                <h3>4.2 Gestion des Conflits</h3>
+                <ul>
+                    <li><strong>Écoute active :</strong> Comprendre avant d'être compris</li>
+                    <li><strong>Médiation :</strong> Faire appel à un tiers neutre si nécessaire</li>
+                    <li><strong>Solution gagnant-gagnant :</strong> Chercher un compromis acceptable</li>
+                    <li><strong>Documentation :</strong> Enregistrer les accords conclus</li>
+                </ul>
+
+                <h3>4.3 Feedback Constructif</h3>
+                <div class="info-box">
+                    <strong>💡 MÉTHODE SBI :</strong>
+                    <br><strong>S</strong>ituation : Décrire le contexte
+                    <br><strong>B</strong>ehavior : Expliquer le comportement observé
+                    <br><strong>I</strong>mpact : Expliquer l'impact ressenti
+                </div>
+            </div>
+
+            <!-- Section 5: Documentation -->
+            <div class="section" id="documentation">
+                <h2>📚 5. DOCUMENTATION ET ARCHIVAGE</h2>
+
+                <h3>5.1 Standards de Documentation</h3>
+                <p>Une documentation de qualité facilite la transmission des connaissances et assure la continuité des projets.</p>
+
+                <div class="checklist">
+                    <h4>📝 Critères de Qualité Documentation</h4>
+                    <ul>
+                        <li>Titre explicite et daté</li>
+                        <li>Auteur et version clairement identifiés</li>
+                        <li>Structure logique avec sommaire</li>
+                        <li>Langage clair et concis</li>
+                        <li>Captures d'écran et schémas si nécessaire</li>
+                        <li>Mise à jour régulière</li>
+                    </ul>
+                </div>
+
+                <h3>5.2 Système d'Archivage PHANTOM</h3>
+                <p>Notre système d'archives utilise une classification à trois niveaux pour garantir la sécurité et l'accessibilité des documents.</p>
+
+                <div class="warning-box">
+                    <strong>⚠️ CLASSIFICATION :</strong>
+                    <br>• <strong>Niveau 1 :</strong> Public (accès libre)
+                    <br>• <strong>Niveau 2 :</strong> Interne (équipe uniquement)
+                    <br>• <strong>Niveau 3 :</strong> Confidentiel (autorisation requise)
+                </div>
+            </div>
+
+            <!-- Section 6: Gestion des Urgences -->
+            <div class="section page-break" id="urgences">
+                <h2>🚨 6. GESTION DES URGENCES</h2>
+
+                <h3>6.1 Matrice d'Eisenhower</h3>
+                <p>Outil de priorisation basé sur l'urgence et l'importance des tâches.</p>
+
+                <div class="info-box">
+                    <strong>💡 QUADRANTS :</strong>
+                    <br>• <strong>Q1 :</strong> Urgent + Important = À faire immédiatement
+                    <br>• <strong>Q2 :</strong> Important + Non urgent = À planifier
+                    <br>• <strong>Q3 :</strong> Urgent + Non important = À déléguer
+                    <br>• <strong>Q4 :</strong> Non urgent + Non important = À éliminer
+                </div>
+
+                <h3>6.2 Protocole d'Escalade</h3>
+                <ol>
+                    <li><strong>Niveau 1 :</strong> Tentative de résolution autonome (15 min max)</li>
+                    <li><strong>Niveau 2 :</strong> Consultation d'un collègue expérimenté</li>
+                    <li><strong>Niveau 3 :</strong> Remontée au responsable d'équipe</li>
+                    <li><strong>Niveau 4 :</strong> Alerte direction/service IT</li>
+                </ol>
+
+                <h3>6.3 Communication de Crise</h3>
+                <div class="best-practice">
+                    <strong>✅ RÈGLE DES 3C :</strong> Communication Claire, Concise et Cohérente
+                </div>
+            </div>
+
+            <!-- Section 7: Formation Continue -->
+            <div class="section" id="formation">
+                <h2>🎓 7. FORMATION CONTINUE</h2>
+
+                <h3>7.1 Plan de Développement Personnel</h3>
+                <p>Chaque collaborateur doit établir un plan de formation annuel aligné sur ses objectifs professionnels et les besoins de l'entreprise.</p>
+
+                <div class="checklist">
+                    <h4>📝 Éléments du Plan de Formation</h4>
+                    <ul>
+                        <li>Évaluation des compétences actuelles</li>
+                        <li>Identification des lacunes</li>
+                        <li>Objectifs SMART de développement</li>
+                        <li>Budget et ressources alloués</li>
+                        <li>Calendrier de formation</li>
+                        <li>Méthodes d'évaluation des progrès</li>
+                    </ul>
+                </div>
+
+                <h3>7.2 Veille Technologique</h3>
+                <p>Rester informé des évolutions de votre domaine d'expertise est essentiel dans un environnement en constante évolution.</p>
+
+                <div class="info-box">
+                    <strong>💡 SOURCES RECOMMANDÉES :</strong>
+                    <br>• Publications spécialisées
+                    <br>• Webinaires et conférences
+                    <br>• Formations en ligne (MOOC)
+                    <br>• Communautés professionnelles
+                    <br>• Réseaux sociaux professionnels
+                </div>
+
+                <h3>7.3 Partage de Connaissances</h3>
+                <div class="best-practice">
+                    <strong>✅ PRINCIPE :</strong> "Enseigner, c'est apprendre deux fois" - Joseph Joubert
+                </div>
+
+                <p>Organisez des sessions de partage d'expertise au sein de votre équipe. Cela renforce les compétences collectives et favorise l'innovation.</p>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">PHANTOM CORPORATION</div>
+            <p>Document confidentiel • Classification Niveau 2 • Diffusion interne uniquement</p>
+            <p>Dernière mise à jour : Mars 2025 • Version 2.0</p>
+            <p>Pour toute question : contact@phantom-corp.internal</p>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling pour les liens internes
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        console.log('📋 Guide des Bonnes Pratiques - Version 2.0 chargée');
+    </script>
+</body>
+</html>
