@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procédure Maintenance Serveur - PHANTOM Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-amber: #D4A574;
+            --secondary-amber: #B3995B;
+            --dark-bg: #0D0D0D;
+            --card-bg: #1A1A1A;
+            --text-light: #f5f5f5;
+            --text-dim: #cccccc;
+            --warning-red: #CC4125;
+            --success-green: #4A7C59;
+        }
+
+        @media print {
+            body { background: white !important; color: #333 !important; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .export-controls { display: none !important; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-amber), var(--secondary-amber));
+            color: #000;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .procedure-meta {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        .content { padding: 30px; }
+
+        .export-controls {
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid var(--primary-amber);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--secondary-amber), var(--primary-amber));
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .nav-breadcrumb {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+        }
+
+        .nav-breadcrumb a {
+            color: var(--secondary-amber);
+            text-decoration: none;
+        }
+
+        .nav-breadcrumb a:hover { color: var(--primary-amber); }
+
+        .section { margin-bottom: 30px; }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-amber);
+        }
+
+        .section h3 {
+            color: var(--secondary-amber);
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .section p { margin-bottom: 15px; text-align: justify; }
+
+        .warning-box {
+            background: rgba(204, 65, 37, 0.1);
+            border-left: 4px solid var(--warning-red);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--primary-amber);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: rgba(74, 124, 89, 0.1);
+            border-left: 4px solid var(--success-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: var(--primary-amber);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .maintenance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .maintenance-table th,
+        .maintenance-table td {
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .maintenance-table th {
+            background: rgba(212, 165, 116, 0.2);
+            color: var(--primary-amber);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+
+        .frequency-box {
+            background: rgba(212, 165, 116, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .frequency-box h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .frequency-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .frequency-item:last-child { border-bottom: none; }
+
+        .checklist {
+            background: rgba(212, 165, 116, 0.05);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist h4 {
+            color: var(--primary-amber);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: var(--primary-amber);
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            background: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-amber);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ MAINTENANCE SERVEUR PHANTOM</h1>
+            <div class="procedure-meta">
+                Classification: IMPORTANT • Version 4.0 • Mise à jour: 20/03/2025
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="nav-breadcrumb no-print">
+                <a href="../../index.html">Archives</a> > 
+                <a href="../index.html">Procédures</a> > 
+                Maintenance Serveur
+            </div>
+
+            <div class="export-controls">
+                <button class="export-btn" onclick="exportPDF()">📄 EXPORTER EN PDF</button>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 OBJECTIF :</strong> Cette procédure définit les tâches de maintenance préventive des serveurs PHANTOM pour assurer leur disponibilité, performance et sécurité optimales.
+            </div>
+
+            <div class="section">
+                <h2>🎯 PÉRIMÈTRE DE MAINTENANCE</h2>
+                
+                <table class="maintenance-table">
+                    <thead>
+                        <tr>
+                            <th>Serveur</th>
+                            <th>Type</th>
+                            <th>Criticité</th>
+                            <th>Fréquence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PHANTOM-CORE-01</td>
+                            <td>Serveur Principal</td>
+                            <td>CRITIQUE</td>
+                            <td>Hebdomadaire</td>
+                        </tr>
+                        <tr>
+                            <td>PHANTOM-DB-01</td>
+                            <td>Base de Données</td>
+                            <td>CRITIQUE</td>
+                            <td>Hebdomadaire</td>
+                        </tr>
+                        <tr>
+                            <td>PHANTOM-BACKUP-01</td>
+                            <td>Sauvegarde</td>
+                            <td>HAUTE</td>
+                            <td>Bi-mensuelle</td>
+                        </tr>
+                        <tr>
+                            <td>PHANTOM-WEB-01</td>
+                            <td>Serveur Web</td>
+                            <td>MOYENNE</td>
+                            <td>Mensuelle</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>📅 PLANNING DE MAINTENANCE</h2>
+                
+                <div class="frequency-box">
+                    <h4>🗓️ Fréquences de Maintenance</h4>
+                    <div class="frequency-item">
+                        <span><strong>Quotidienne :</strong></span>
+                        <span>Vérification logs, monitoring alertes</span>
+                    </div>
+                    <div class="frequency-item">
+                        <span><strong>Hebdomadaire :</strong></span>
+                        <span>Maintenance préventive serveurs critiques</span>
+                    </div>
+                    <div class="frequency-item">
+                        <span><strong>Mensuelle :</strong></span>
+                        <span>Mise à jour sécurité, nettoyage disques</span>
+                    </div>
+                    <div class="frequency-item">
+                        <span><strong>Trimestrielle :</strong></span>
+                        <span>Maintenance matérielle, test DR</span>
+                    </div>
+                    <div class="frequency-item">
+                        <span><strong>Annuelle :</strong></span>
+                        <span>Révision complète, remplacement préventif</span>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ FENÊTRE DE MAINTENANCE :</strong> Dimanche 02h00 - 06h00 pour les interventions nécessitant arrêt des services.
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔧 MAINTENANCE HEBDOMADAIRE</h2>
+                
+                <h3>Pré-requis</h3>
+                <div class="checklist">
+                    <h4>✅ Vérifications Préalables</h4>
+                    <ul>
+                        <li>Notification utilisateurs 24h avant intervention</li>
+                        <li>Sauvegarde complète validée</li>
+                        <li>Plan de rollback préparé</li>
+                        <li>Équipe d'astreinte disponible</li>
+                        <li>Outils de maintenance à jour</li>
+                    </ul>
+                </div>
+
+                <h3>Procédure Détaillée</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>VÉRIFICATION SYSTÈME</strong><br>
+                        Contrôler l'état général du serveur : CPU, RAM, stockage, température. Analyser les logs système des 7 derniers jours pour identifier les anomalies.
+                    </li>
+                    <li>
+                        <strong>MISE À JOUR SÉCURITÉ</strong><br>
+                        Installer les correctifs de sécurité critiques. Vérifier les certificats SSL/TLS et leur date d'expiration. Contrôler l'état des pare-feux.
+                    </li>
+                    <li>
+                        <strong>OPTIMISATION BASE DE DONNÉES</strong><br>
+                        Exécuter la réindexation des tables PHANTOM. Analyser les requêtes lentes et optimiser si nécessaire. Purger les logs anciens selon la politique de rétention.
+                    </li>
+                    <li>
+                        <strong>NETTOYAGE DISQUES</strong><br>
+                        Supprimer les fichiers temporaires et logs obsolètes. Défragmenter les disques si nécessaire. Vérifier l'espace libre (minimum 20% recommandé).
+                    </li>
+                    <li>
+                        <strong>TEST SAUVEGARDES</strong><br>
+                        Valider l'intégrité des sauvegardes automatiques. Effectuer un test de restauration partielle. Documenter les résultats dans le registre.
+                    </li>
+                    <li>
+                        <strong>MONITORING ET ALERTES</strong><br>
+                        Vérifier le fonctionnement des sondes de monitoring. Calibrer les seuils d'alerte si nécessaire. Tester l'envoi des notifications d'urgence.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section page-break">
+                <h2>📊 MAINTENANCE MENSUELLE</h2>
+                
+                <h3>Actions Complémentaires</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>AUDIT SÉCURITÉ</strong><br>
+                        Scanner les vulnérabilités avec les outils dédiés. Réviser les comptes utilisateurs et leurs privilèges. Contrôler les accès SSH et leur historique.
+                    </li>
+                    <li>
+                        <strong>PERFORMANCE ANALYSIS</strong><br>
+                        Analyser les métriques de performance sur 30 jours. Identifier les goulots d'étranglement. Planifier les montées en charge si nécessaire.
+                    </li>
+                    <li>
+                        <strong>MAINTENANCE APPLICATIVE</strong><br>
+                        Mettre à jour les applications PHANTOM selon les releases. Tester la compatibilité des nouvelles versions. Valider les fonctionnalités critiques.
+                    </li>
+                    <li>
+                        <strong>DOCUMENTATION</strong><br>
+                        Mettre à jour la documentation technique. Réviser les procédures d'incident. Archiver les rapports de maintenance précédents.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>🛠️ MAINTENANCE MATÉRIELLE</h2>
+                
+                <h3>Contrôles Trimestriels</h3>
+                <div class="warning-box">
+                    <strong>⚠️ ARRÊT REQUIS :</strong> Ces interventions nécessitent l'arrêt temporaire des serveurs (fenêtre de maintenance obligatoire).
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>NETTOYAGE PHYSIQUE</strong><br>
+                        Dépoussiérage complet des serveurs et baies. Nettoyage des ventilateurs et radiateurs. Contrôle visuel des composants et câblages.
+                    </li>
+                    <li>
+                        <strong>CONTRÔLE ALIMENTATION</strong><br>
+                        Test des alimentations et UPS. Vérification des connexions électriques. Contrôle de la continuité des masses et terre.
+                    </li>
+                    <li>
+                        <strong>DIAGNOSTIC MATÉRIEL</strong><br>
+                        Test mémoire (memtest86+), test disques (SMART), stress test CPU. Vérification températures et ventilations sous charge.
+                    </li>
+                    <li>
+                        <strong>REMPLACEMENT PRÉVENTIF</strong><br>
+                        Remplacement des composants selon leur durée de vie. Mise à jour firmware et BIOS. Contrôle des garanties constructeur.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>📝 DOCUMENTATION ET REPORTING</h2>
+                
+                <h3>Rapport de Maintenance</h3>
+                <div class="checklist">
+                    <h4>📋 Éléments du Rapport</h4>
+                    <ul>
+                        <li>Date et durée de l'intervention</li>
+                        <li>Serveurs concernés et actions effectuées</li>
+                        <li>Anomalies détectées et corrections apportées</li>
+                        <li>Métriques performance avant/après</li>
+                        <li>Recommandations et actions préventives</li>
+                        <li>Planning des prochaines interventions</li>
+                        <li>Validation tests post-maintenance</li>
+                        <li>Impact utilisateur et communication</li>
+                    </ul>
+                </div>
+
+                <h3>Indicateurs de Performance</h3>
+                <div class="success-box">
+                    <strong>✅ KPI MAINTENANCE :</strong>
+                    <br>• Disponibilité serveurs > 99.5%
+                    <br>• Temps moyen de maintenance < 2h
+                    <br>• Nombre d'incidents post-maintenance = 0
+                    <br>• Satisfaction utilisateurs > 95%
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🚨 PROCÉDURES D'URGENCE</h2>
+                
+                <h3>En cas de problème durant la maintenance</h3>
+                <div class="warning-box">
+                    <strong>⚠️ ESCALADE :</strong> Si un problème critique survient, appliquer immédiatement le plan de rollback et contacter l'astreinte technique.
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>ARRÊT IMMÉDIAT</strong><br>
+                        Stopper l'intervention en cours. Noter précisément l'action qui a causé le problème. Évaluer l'impact sur les services.
+                    </li>
+                    <li>
+                        <strong>PLAN DE ROLLBACK</strong><br>
+                        Restaurer la configuration précédente depuis la sauvegarde. Redémarrer les services dans l'ordre défini. Valider le retour à la normale.
+                    </li>
+                    <li>
+                        <strong>COMMUNICATION DE CRISE</strong><br>
+                        Informer immédiatement la direction et les utilisateurs. Activer la cellule de crise si impact majeur. Documenter l'incident pour analyse.
+                    </li>
+                </ol>
+
+                <h3>Contacts d'Urgence</h3>
+                <div class="info-box">
+                    <strong>📞 URGENCES :</strong>
+                    <br>• Astreinte Technique : +33 6 12 34 56 78
+                    <br>• Responsable IT : +33 1 23 45 67 89
+                    <br>• Direction : +33 1 98 76 54 32
+                    <br>• Support Constructeur : 0800 xxx xxx
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="footer-logo">PHANTOM CORPORATION</div>
+            <p>Document confidentiel • Classification IMPORTANT • Usage interne uniquement</p>
+            <p>Version 4.0 • Dernière révision : 20/03/2025</p>
+            <p>Contact technique : maintenance@phantom-corp.internal</p>
+        </div>
+    </div>
+
+    <script>
+        // Export PDF
+        function exportPDF() {
+            const exportControls = document.querySelector('.export-controls');
+            exportControls.style.display = 'none';
+            
+            setTimeout(() => {
+                window.print();
+                setTimeout(() => {
+                    exportControls.style.display = 'block';
+                }, 1000);
+            }, 500);
+            
+            console.log('📄 Export PDF - Procédure Maintenance Serveur');
+        }
+
+        console.log('🖥️ Procédure Maintenance Serveur - Version 4.0 chargée');
+    </script>
+</body>
+</html>
